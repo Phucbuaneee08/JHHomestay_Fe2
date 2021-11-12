@@ -1,8 +1,11 @@
 import "./Dashboard.css"
+import Sidebar from "../../components/Shared/Sidebar"
+
 function Dashboard() {
     return(
-        <div className="dashboard_container">
-            <h1>Dashboard</h1>
+        <div>
+            <Sidebar />
+           
         </div>
     )
 

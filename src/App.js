@@ -31,7 +31,7 @@ function App() {
     routes = (
       <Switch>
         <Route path="/dashboard" component={Dashboard} />
-        <Redirect to="/dashboard" />
+        <Redirect to="/dashboard/mainpage" />
       </Switch>)
   else
     routes = (

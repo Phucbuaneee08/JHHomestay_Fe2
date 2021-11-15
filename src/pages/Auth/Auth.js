@@ -11,7 +11,7 @@ function Auth() {
         email: "",
         password: ""
     })
-    const [loginState, setLoginState] = useState(false);
+    const [errorState, setErrorState] = useState(false);
     const dispatch = useDispatch();
 
     /* Handler */
@@ -38,7 +38,7 @@ function Auth() {
                 token: response.data.content.token
             }))
         } catch (err) {
-            setLoginState(true);
+            setErrorState(true);
         }
     }
 
@@ -122,14 +122,13 @@ function Auth() {
                     </div>
                 </div>
             </div>
-            <div role="alert" className={`mt-16 sm:mt-6 mb-6 sm:mb-0 absolute left-0 sm:left-auto right-0 sm:top-0 flex items-center justify-between bg-white dark:bg-gray-800 shadow-lg rounded transition ease-in-out ${loginState ? 'p-4 mx-auto sm:mr-6 xl:w-1/4 sm:w-2/5 md:w-1/2 w-11/12 translate-show' : 'translate-hide w-0 overflow-hidden'}`}>
+            <div role="alert" className={`mt-16 sm:mt-6 mb-6 sm:mb-0 absolute left-0 sm:left-auto right-0 sm:top-0 flex items-center justify-between bg-white dark:bg-gray-800 shadow-lg rounded transition ease-in-out ${errorState ? 'p-4 mx-auto sm:mr-6 xl:w-1/4 sm:w-2/5 md:w-1/2 w-11/12 translate-show' : 'translate-hide w-0 overflow-hidden'}`}>
                 <div className="sm:px-2 p-1 mt-1 sm:mt-0 ml-2 sm:ml-0 flex items-center h-5 sm:h-auto text-red-500">
                     <ExclamationCircleIcon className="w-5 h-5 mr-1"/>
                     Wrong Email or Password
                 </div>
                 <button 
-                    onClick={() => setLoginState(false)}
-                    className=""
+                    onClick={() => setErrorState(false)}
                 >
                     <XIcon className="w-5 h-5"/>
                 </button>

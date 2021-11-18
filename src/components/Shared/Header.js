@@ -15,6 +15,7 @@ const Header = () => {
                     <span class="flex-shrink font-semibold text-l lg:text-xl pl-2 text-green-700 font-sans"><i class="em em-grinning" href="/#"></i> Jade Hill Homestays</span>
                 </a>
             </div>
+            
             {/*search box */}
             <div class="mx-3 md:justify-end sm:justify-start flex-grow lg:flex lg:items-center pt-0 px-0 lg:pt-0">
                 <div class="relative">
@@ -26,6 +27,7 @@ const Header = () => {
                     </div>
                 </div>
             </div> 
+
             {/*dropdown */}
             <div class="mx-8 pt-1 h-auto flex flex-shrink-0 visible justify-center items-center">
                 <a href="/#">

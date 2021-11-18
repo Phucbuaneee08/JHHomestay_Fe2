@@ -11,9 +11,9 @@ import {Switch, Route, Redirect} from "react-router-dom"
 
 function Dashboard() {
     return(
-        <div>
-            <Sidebar />
-            <div>
+        <div class="grid grid-cols-7">
+            <Sidebar class="col-span-1"/>
+            <div class="col-start-2 col-end-8 flex-shrink bg-white">
                 <Header />
             <Switch>
                 <Route path="/dashboard/mainpage" exact>
@@ -36,8 +36,7 @@ function Dashboard() {
                 </Route>
                 <Redirect path="/dashboard/mainpage"/>
             </Switch>
-            </div>
-           
+            </div>    
         </div>
     )
 

@@ -7,7 +7,7 @@ import Auth from "./pages/Auth/Auth"
 
 
 function App() {
-  const { isAuthenticated, userId, token} = useSelector((state) => state.authReducer)
+  const { token} = useSelector((state) => state.authReducer)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -21,7 +21,7 @@ function App() {
         }
       })
     }
-  }, [])
+  },  [])
 
 
 

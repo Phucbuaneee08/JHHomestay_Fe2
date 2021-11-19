@@ -1,6 +1,6 @@
 const authState = {
+    email: "",
     role: "",
-    isAuthenticated: false,
     token: "",
     userId:"",
     //expDate: "",
@@ -9,10 +9,11 @@ const authState = {
 export const authReducer = (state = authState, action) => {
     switch(action.type){
         case "LOGIN":
-            const {userId, token, role} = action.payload
+            const {email, userId, token, role} = action.payload
             // add expire handle here
 
             localStorage.setItem("authData", JSON.stringify({
+                    email: email,
                     userId: userId,
                     token: token,
                 })
@@ -22,7 +23,7 @@ export const authReducer = (state = authState, action) => {
                 role,
                 userId,
                 token,
-                isAuthenticated: true,
+                email,
                 
             }
         default:

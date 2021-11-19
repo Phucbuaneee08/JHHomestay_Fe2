@@ -52,14 +52,12 @@ function Auth() {
                 dispatch({
                     type: "LOGIN",
                     payload: {
+                        email: response.data.content.email,
                         userId:response.data.content._id,
-                        token: response.data.content.token
+                        token: response.data.content.token,
+                        role: response.data.content.role,
                     }
                 })
-                localStorage.setItem("authData", JSON.stringify({
-                    userId: response.data.content._id,
-                    token: response.data.content.token
-                }))
             } catch (err) {
                 setErrorState({
                     errorValue: true,

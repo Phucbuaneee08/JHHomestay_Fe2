@@ -13,6 +13,7 @@ export const authReducer = (state = authState, action) => {
             // add expire handle here
 
             localStorage.setItem("authData", JSON.stringify({
+                    role: role,
                     email: email,
                     userId: userId,
                     token: token,

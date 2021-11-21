@@ -1,40 +1,79 @@
-import logo from './JadeHill.svg';
-import acc_logo from './account.svg';
-import search_logo from './search.svg';
+import { Fragment } from 'react'
+import { Disclosure, Menu, Transition } from '@headlessui/react'
+import {UserCircleIcon} from '@heroicons/react/outline'
+import {ChevronDownIcon} from '@heroicons/react/solid'
 
-const Header = () => {
- 
+import { useSelector, useDispatch } from 'react-redux'
+
+const user = {
+    name: 'User Name',
+}
+const userNavigation = [
+    { name: 'Thông tin cá nhân', href: '#' },
+    { name: 'Đăng xuất', href: '#' },
+]
+  
+function classNames(...classes) {
+    return classes.filter(Boolean).join(' ')
+}
+  
+const Header = (props) => {
+    const dispatch = useDispatch()
     return(
-        <div class="border-solid shadow border-green-300 flex items-center justify-between p-0">
-            {/*logo + tên homestay */}
-            <a class="flex-shrink-0 visible" href="/#">
-                <img class="mx-auto h-20 w-20 " src={logo} alt="Logo" href="/#"/>
-            </a>
-            <div class="flex items-center flex-shrink text-white mr-6">
-                <a class="text-white no-underline" href="/#">
-                    <span class="flex-shrink font-semibold text-l lg:text-xl pl-2 text-green-700 font-sans"><i class="em em-grinning" href="/#"></i> Jade Hill Homestays</span>
-                </a>
-            </div>
-            
-            {/*search box */}
-            <div class="mx-3 md:justify-end sm:justify-start flex-grow lg:flex lg:items-center pt-0 px-0 lg:pt-0">
-                <div class="relative">
-                    <input type="text" class="h-12 w-80 pl-5 pr-20 rounded-md z-0 shadow focus:outline-none" placeholder="Tìm kiếm"/>
-                    <div class="absolute top-0 right-0 items-center justify-center pr-0"> 
-                        <button class="h-9  w-14 mt-1.5 mr-1.5 rounded-md bg-green-600 hover:bg-green-500">
-                            <img class="mx-auto h-5 w-auto" src={search_logo} alt="Logo" href="/#"/>
-                        </button> 
+        <div className="border-solid h-16 md:h-20 shadow flex items-center justify-end">
+            <div className="mx-4 h-auto flex-shrink-0 visible min-h-full">  
+                <Disclosure as="nav" className="bg-white">
+                {({ open }) => (    
+                    <div className="max-w-7xl mx-auto px-0 lg:px-2 flex items-center my-2 justify-between h-12 md:h-16 ">
+                        <div className="md:block ml-4 flex items-center">
+                            {/* Profile dropdown */}
+                            <Menu as="div" className="ml-3 relastive">
+                                <div>
+                                    <Menu.Button className="max-w-sm bg-white flex items-center rounded-full hover:bg-gray-100">
+                                        <UserCircleIcon className="pl-2 w-10 h-10 md:h-12 md:w-12 stroke-current test-define"/>
+                                        <style>{`
+                                            .test-define > path{
+                                                stroke-width: 1;
+                                            }
+                                        `}</style>   
+                                        <p className="md:text-xl text-base pl-2 w-auto text-black">{props.email}</p>
+                                        <ChevronDownIcon className="w-6 h-6 pt-1 pr-1"/>
+                                    </Menu.Button>
+                                </div>
+                                <Transition
+                                as={Fragment}
+                                enter="transition ease-out duration-100"
+                                enterFrom="transform opacity-0 scale-95"
+                                enterTo="transform opacity-100 scale-100"
+                                leave="transition ease-in duration-75"
+                                leaveFrom="transform opacity-100 scale-100"
+                                leaveTo="transform opacity-0 scale-95"
+                                >
+                                <Menu.Items className="origin-top-right absolute right-3 mt-4 md:mt-5 h-22 w-44 md:h-28 md:w-52 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                    {userNavigation.map((item) => (
+                                    <Menu.Item key={item.name}>
+                                        {({ active }) => (
+                                        <a
+                                            href={item.href}
+                                            className={classNames(
+                                            active ? 'bg-gray-100 font-semibold' : '',
+                                            'block px-4 py-1 md:py-3 md:text-xl text-base text-gray-700'
+                                            )}
+                                        >
+                                            {item.name}
+                                        </a>
+                                        )}
+                                    </Menu.Item>
+                                    ))}
+                                </Menu.Items>
+
+                                </Transition>
+                            </Menu>
+                        </div>
                     </div>
-                </div>
-            </div> 
-
-            {/*dropdown */}
-            <div class="mx-8 pt-1 h-auto flex flex-shrink-0 visible justify-center items-center">
-                <a href="/#">
-                    <img class="mx-auto h-10 w-auto" src={acc_logo} alt="AccountLogo" href="/#"/>
-                </a>
+                )}
+                </Disclosure>
             </div>
-
         </div>
     )
 }

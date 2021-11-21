@@ -3,6 +3,8 @@ import { Disclosure, Menu, Transition } from '@headlessui/react'
 import {UserCircleIcon} from '@heroicons/react/outline'
 import {ChevronDownIcon} from '@heroicons/react/solid'
 
+import { useSelector, useDispatch } from 'react-redux'
+
 const user = {
     name: 'User Name',
 }
@@ -16,6 +18,7 @@ function classNames(...classes) {
 }
   
 const Header = (props) => {
+    const dispatch = useDispatch()
     return(
         <div className="border-solid h-16 md:h-20 shadow flex items-center justify-end">
             <div className="mx-4 h-auto flex-shrink-0 visible min-h-full">  
@@ -33,7 +36,7 @@ const Header = (props) => {
                                                 stroke-width: 1;
                                             }
                                         `}</style>   
-                                        <p className="md:text-xl text-base pl-2 w-auto text-black">{user.name}</p>
+                                        <p className="md:text-xl text-base pl-2 w-auto text-black">{props.email}</p>
                                         <ChevronDownIcon className="w-6 h-6 pt-1 pr-1"/>
                                     </Menu.Button>
                                 </div>

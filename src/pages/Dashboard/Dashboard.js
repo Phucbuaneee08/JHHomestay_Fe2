@@ -8,13 +8,15 @@ import Sidebar from "../../components/Shared/Sidebar"
 import Header from "../../components/Shared/Header"
 
 import {Switch, Route, Redirect} from "react-router-dom"
+import { useSelector} from 'react-redux'
 
 function Dashboard() {
+    const { role, email} = useSelector((state) => state.authReducer)
     return(
         <div className="grid grid-cols-7">
             <Sidebar className="col-span-1"/>
             <div className="col-start-2 col-end-8 flex-shrink bg-white">
-                <Header />
+                <Header email={email} />
                 <Switch>
                     <Route path="/dashboard/mainpage" exact>
                         <Mainpage />

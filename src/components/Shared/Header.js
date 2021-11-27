@@ -20,16 +20,16 @@ function classNames(...classes) {
 const Header = (props) => {
     const dispatch = useDispatch()
     return(
-        <div className="border-solid h-16 md:h-20 shadow flex items-center justify-end">
+        <div className="border-solid h-16 md:h-20 shadow flex items-center justify-end bg-gray-100">
             <div className="mx-4 h-auto flex-shrink-0 visible min-h-full">  
-                <Disclosure as="nav" className="bg-white">
+                <Disclosure as="nav" className="bg-gray-100">
                 {({ open }) => (    
                     <div className="max-w-7xl mx-auto px-0 lg:px-2 flex items-center my-2 justify-between h-12 md:h-16 ">
                         <div className="md:block ml-4 flex items-center">
                             {/* Profile dropdown */}
                             <Menu as="div" className="ml-3 relastive">
                                 <div>
-                                    <Menu.Button className="max-w-sm bg-white flex items-center rounded-full hover:bg-gray-100">
+                                    <Menu.Button className="max-w-sm bg-gray-100 flex items-center rounded-full hover:bg-gray-100">
                                         <UserCircleIcon className="pl-2 w-10 h-10 md:h-12 md:w-12 stroke-current test-define"/>
                                         <style>{`
                                             .test-define > path{
@@ -49,7 +49,7 @@ const Header = (props) => {
                                 leaveFrom="transform opacity-100 scale-100"
                                 leaveTo="transform opacity-0 scale-95"
                                 >
-                                <Menu.Items className="origin-top-right absolute right-3 mt-4 md:mt-5 h-22 w-44 md:h-28 md:w-52 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                <Menu.Items className="origin-top-right absolute right-3 mt-4 md:mt-5 h-22 w-44 md:h-28 md:w-52 rounded-md shadow-lg py-1 bg-gray-100 ring-1 ring-black ring-opacity-5 focus:outline-none">
                                     {userNavigation.map((item) => (
                                     <Menu.Item key={item.name}>
                                         {({ active }) => (

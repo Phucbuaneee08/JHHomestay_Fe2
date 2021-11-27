@@ -14,7 +14,7 @@ function Dashboard() {
     const { role, email} = useSelector((state) => state.authReducer)
     return(
         <div className="grid grid-cols-7">
-            <Sidebar className="col-span-1"/>
+            <Sidebar className="col-span-1 "/>
             <div className="col-start-2 col-end-8 flex-shrink bg-white">
                 <Header email={email} />
                 <Switch>

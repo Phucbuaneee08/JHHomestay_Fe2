@@ -24,28 +24,25 @@ const sidebarVar =[
 ]
 
 function Sidebar () {
-
-    const sidebarList = sidebarVar.map( (item) =>
-        <Link to = {item.path} className="ml-2">{item.title}</Link>
-    );
-  
     let location = useLocation();
-    for(var i =0; i < 6; i++){
-        if(location.pathname === sidebarVar[i].path){
-            sidebarList[i] = <Link to={sidebarVar[i].path} className ="ml-2 text-indigo-600 font-bold md:text-2xl text-auto">{sidebarVar[i].title}</Link>
-        }
-    }
+    const sidebarList = sidebarVar.map( item => {
+        if (location.pathname === item.path)
+            return (<Link to={item.path} className ="ml-2 text-green-600 font-bold md:text-2xl text-auto">{item.title}</Link>)  // có focus
+        else
+           return (<Link to = {item.path} className="ml-2">{item.title}</Link>) // không focus
+        
 
-    const sidebarClass = "flex items-center mx-12 my-5 md:text-xl text-auto cursor-pointer text-gray-600 transform hover:scale-125 hover:text-indigo-700"
-
+    });
+  
+    const sidebarClass = "flex items-center mx-12 my-5 md:text-xl text-auto cursor-pointer text-gray-600 transform hover:scale-125 hover:text-green-700"
     return(
         <div className="w-full h-full bg-gray-200">
         <div className="flex flex-no-wrap" >
             {/* Sidebar starts */}
-            <div className="absolute lg:relative w-64 h-screen shadow bg-gray-100 flex lg:block">
-            <div >
-            <img className="mx-auto mt-5 h-24 w-auto" src={logo} alt="Logo"/>
-            </div>
+            <div className="absolute lg:relative w-64 h-screen shadow bg-gray-100 flex flex-col lg:block">
+                <div >
+                    <img className="mx-auto mt-5 h-24 w-auto" src={logo} alt="Logo"/>
+                </div>
                 <ul  className="py-6" aria-orientation="vertical">
                     <li className = {sidebarClass}>
                         <svg 

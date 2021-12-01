@@ -16,14 +16,14 @@ function App() {
       dispatch({
         type: "LOGIN",
         payload: {
+          email: authData.email,
           userId: authData.userId,
           token: authData.token,
+          role: authData.role,
         }
       })
     }
   },  [])
-
-
 
   let routes
 

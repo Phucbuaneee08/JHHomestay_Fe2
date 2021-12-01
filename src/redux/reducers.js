@@ -25,7 +25,16 @@ export const authReducer = (state = authState, action) => {
                 userId,
                 token,
                 email,
-                
+            }
+        
+        case "LOGOUT":
+            localStorage.removeItem("authData")
+            return {
+                ...authState,
+                role: "",
+                userId: "",
+                token: "",
+                email: "", 
             }
         default:
             return state

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import logo from './logo.svg';
+import logo from "../../public/logo.svg";
 import { LockClosedIcon } from '@heroicons/react/solid'
 import { ExclamationCircleIcon, XIcon } from '@heroicons/react/outline'
 

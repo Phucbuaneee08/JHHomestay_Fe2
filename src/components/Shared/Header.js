@@ -1,16 +1,16 @@
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import {UserCircleIcon} from '@heroicons/react/outline'
 import {ChevronDownIcon} from '@heroicons/react/solid'
 
-import { useSelector, useDispatch } from 'react-redux'
+import LogoutModal from './LogoutModal'
 
 const user = {
     name: 'User Name',
 }
 const userNavigation = [
-    { name: 'Thông tin cá nhân', href: '#' },
-    { name: 'Đăng xuất', href: '#' },
+    { name: 'Thông tin cá nhân', href: '#', id: 'Profile' },
+    { name: 'Đăng xuất', href: '#', id: 'Logout' },
 ]
   
 function classNames(...classes) {
@@ -18,7 +18,13 @@ function classNames(...classes) {
 }
   
 const Header = (props) => {
-    const dispatch = useDispatch()
+    let [isOpen, setIsOpen]= useState(false)
+
+    function openModal(id) {
+        console.log(id)
+        if(id === 'Logout')
+            setIsOpen(true)
+      } 
     return(
         <div className="border-solid h-16 md:h-20 shadow flex items-center justify-end bg-gray-100">
             <div className="mx-4 h-auto flex-shrink-0 visible min-h-full">  
@@ -53,15 +59,16 @@ const Header = (props) => {
                                     {userNavigation.map((item) => (
                                     <Menu.Item key={item.name}>
                                         {({ active }) => (
-                                        <a
-                                            href={item.href}
+                                        <button
                                             className={classNames(
                                             active ? 'bg-gray-100 font-semibold' : '',
                                             'block px-4 py-1 md:py-3 md:text-xl text-base text-gray-700'
                                             )}
+                                            onClick = {() => openModal(item.id)}
+
                                         >
                                             {item.name}
-                                        </a>
+                                        </button>
                                         )}
                                     </Menu.Item>
                                     ))}
@@ -74,6 +81,7 @@ const Header = (props) => {
                 )}
                 </Disclosure>
             </div>
+         <LogoutModal logoutProp={[isOpen, setIsOpen]} />
         </div>
     )
 }

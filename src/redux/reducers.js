@@ -6,6 +6,8 @@ const authState = {
     //expDate: "",
 }
 
+const homestayState = []
+
 export const authReducer = (state = authState, action) => {
     switch(action.type){
         case "LOGIN":
@@ -39,5 +41,19 @@ export const authReducer = (state = authState, action) => {
         default:
             return state
     }
+}
 
+export const homestayReducer = (state = homestayState, action) => {
+    switch (action.type) {
+        case "SET":
+            const { homestays } = action.payload
+            //console.log(homestays)
+            return homestays
+
+        case "RESET":
+            return homestayState
+
+        default:
+            return state
+    }
 }

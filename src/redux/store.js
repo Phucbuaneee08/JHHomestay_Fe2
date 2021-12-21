@@ -1,7 +1,14 @@
-import { createStore, combineReducers } from "redux"
+import { createStore, combineReducers,applyMiddleware } from "redux"
 
-import { authReducer } from "./reducers"
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { authReducer, homestayReducer } from "./reducers"
 
-const rootReducer = combineReducers({authReducer})
+const rootReducer = combineReducers({authReducer, homestayReducer})
 
-export const store = createStore(rootReducer)
+
+export const store = createStore(rootReducer,
+    composeWithDevTools(
+        applyMiddleware()
+        // other store enhancers if any
+      ))
+

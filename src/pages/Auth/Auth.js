@@ -49,6 +49,13 @@ function Auth() {
         } else {
             try {
                 const response = await axios.post("http://localhost:8000/auth/login", authData);
+                console.log(response.data.content.homestays)
+                dispatch({
+                    type: "SET",
+                    payload: {
+                        homestays: response.data.content.homestays,
+                    }
+                })
                 dispatch({
                     type: "LOGIN",
                     payload: {

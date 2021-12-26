@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Auth from "./pages/Auth/Auth";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const { token } = useSelector((state) => state.authReducer);
@@ -59,7 +60,7 @@ function App() {
         pauseOnHover={false}
         pauseOnFocusLoss={false}
         limit={5}
-        style={{width: "24rem"}}
+        style={{ width: "24rem" }}
       />
     </div>
   );

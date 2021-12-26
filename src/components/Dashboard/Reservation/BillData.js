@@ -1,8 +1,7 @@
-import { useEffect } from "react";
-
 const BillData = (props) => {
   const [data, setData] = props.dataProps;
   const [setIsOpen, setModalData] = props.editProps;
+  const status = props.status;
 
   return (
     <div className="flex flex-col mt-6">
@@ -56,18 +55,20 @@ const BillData = (props) => {
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {person.checkinDate}
+                      {new Date(person.checkinDate).toLocaleString()}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                      <button
-                        onClick={() => {
-                          setIsOpen(true);
-                          setModalData(person);
-                        }}
-                        className="p-2 border rounded-md hover:border-gray-500"
-                      >
-                        Cập nhật
-                      </button>
+                      {status.id === 3 ? null : (
+                        <button
+                          onClick={() => {
+                            setIsOpen(true);
+                            setModalData(person);
+                          }}
+                          className="p-2 border rounded-md hover:border-gray-500"
+                        >
+                          Cập nhật
+                        </button>
+                      )}
                     </td>
                   </tr>
                 ))}

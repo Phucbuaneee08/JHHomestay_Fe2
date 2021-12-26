@@ -1,16 +1,71 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/solid";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import UserData from "./Modal/UserData";
 import DatetimeData from "./Modal/DatetimeData";
 import ServiceData from "./Modal/ServiceData";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const UpdateModal = (props) => {
   const [isOpen, setIsOpen] = props.editProps;
   const closeModal = () => setIsOpen(false);
 
   const [modalData, setModalData] = props.editDataProps;
-  console.log(modalData);
+  const { id } = props.status;
+  const token = props.token;
+  const setIsEdited = props.setIsEdited;
+
+  const handleRejectClick = () => {
+    // Call API remove bill from database
+
+    closeModal();
+  }
+
+  const handleAcceptClick = () => {
+    if (id === 1) {
+      // Call API - Move this Bill from Accepted to Paid
+      toast("Loading...", { type: toast.TYPE.INFO });
+      axios({
+        method: "PUT",
+        url: "http://localhost:8000/admins/update/bills",
+        data: {
+          ...modalData,
+          homestayId: modalData.homestay,
+          status: 3,
+        },
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+        .then(() => {
+          toast("Success", { type: toast.TYPE.SUCCESS });
+          setIsEdited(true);
+        })
+        .catch((err) => toast(err.message, { type: toast.TYPE.ERROR }));
+    } else {
+      // Call API - Move this Bill from Pending to Accepted
+      toast("Loading...", { type: toast.TYPE.INFO });
+      axios({
+        method: "PUT",
+        url: "http://localhost:8000/admins/update/bills",
+        data: {
+          ...modalData,
+          homestayId: modalData.homestay,
+          status: 1,
+        },
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+        .then(() => {
+          toast("Success", { type: toast.TYPE.SUCCESS });
+          setIsEdited(true);
+        })
+        .catch((err) => toast(err.message, { type: toast.TYPE.ERROR }));
+    }
+    closeModal();
+  };
 
   return (
     <>
@@ -71,8 +126,11 @@ const UpdateModal = (props) => {
                       userData={modalData.customer}
                       accompanyData={modalData.customerTogether}
                     />
-                    <DatetimeData timedateProps={[modalData, setModalData]} />
-                    <ServiceData/>
+                    <DatetimeData
+                      timedateProps={[modalData, setModalData]}
+                      id={id}
+                    />
+                    <ServiceData />
                   </div>
                 </div>
 
@@ -80,20 +138,16 @@ const UpdateModal = (props) => {
                   <button
                     type="button"
                     className="inline-flex justify-center px-4 py-2 text-sm font-medium text-gray-900 bg-gray-100 border border-transparent rounded-md hover:bg-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                    onClick={closeModal}
+                    onClick={handleRejectClick}
                   >
-                    Quay lại
+                    {id === 1 ? "Từ chối" : "Hủy đơn"}
                   </button>
                   <button
                     type="button"
                     className="inline-flex justify-center px-4 py-2 text-sm font-medium text-green-900 bg-green-100 border border-transparent rounded-md hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                    onClick={() => {
-                      closeModal();
-                      // Call API Update
-                      console.log(modalData);
-                    }}
+                    onClick={handleAcceptClick}
                   >
-                    Cập nhật
+                    {id === 1 ? "Chấp nhận" : "Xác nhận"}
                   </button>
                 </div>
               </div>

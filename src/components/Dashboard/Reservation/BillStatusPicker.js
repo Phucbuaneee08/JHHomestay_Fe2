@@ -42,22 +42,20 @@ function BillStatusPicker(props) {
                   {billStatus.map((status) => (
                     <Listbox.Option
                       key={status.id}
-                      className={({ active }) => (
-                        active ? "text-white bg-indigo-600" : "text-gray-900",
-                        "cursor-default select-none relative py-2 pl-3 pr-9"
-                      )}
+                      className={({ active }) =>
+                        `cursor-default select-none relative py-2 pl-3 pr-9 ${
+                          active ? "text-white bg-indigo-600" : "text-gray-900"
+                        }`
+                      }
                       value={status}
                     >
                       {({ selected, active }) => (
-                        <>
-                          <span
-                            className={
-                              (selected ? "font-semibold" : "font-normal",
-                              "ml-3 block truncate")
-                            }
-                          >
-                            {status.name}
-                          </span>
+                        <span
+                          className={`ml-3 block truncate ${
+                            selected ? "font-semibold" : "font-normal"
+                          }`}
+                        >
+                          {status.name}
                           {selected ? (
                             <span
                               className={
@@ -71,7 +69,7 @@ function BillStatusPicker(props) {
                               />
                             </span>
                           ) : null}
-                        </>
+                        </span>
                       )}
                     </Listbox.Option>
                   ))}

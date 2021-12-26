@@ -25,7 +25,7 @@ const UpdateModal = (props) => {
   const handleAcceptClick = () => {
     if (id === 1) {
       // Call API - Move this Bill from Accepted to Paid
-      toast("Loading...", { type: toast.TYPE.INFO });
+      toast("Đang chờ...", { type: toast.TYPE.INFO });
       axios({
         method: "PUT",
         url: "http://localhost:8000/admins/update/bills",
@@ -39,13 +39,13 @@ const UpdateModal = (props) => {
         },
       })
         .then(() => {
-          toast("Success", { type: toast.TYPE.SUCCESS });
+          toast("Thành công", { type: toast.TYPE.SUCCESS });
           setIsEdited(true);
         })
         .catch((err) => toast(err.message, { type: toast.TYPE.ERROR }));
     } else {
       // Call API - Move this Bill from Pending to Accepted
-      toast("Loading...", { type: toast.TYPE.INFO });
+      toast("Đang chờ...", { type: toast.TYPE.INFO });
       axios({
         method: "PUT",
         url: "http://localhost:8000/admins/update/bills",
@@ -59,7 +59,7 @@ const UpdateModal = (props) => {
         },
       })
         .then(() => {
-          toast("Success", { type: toast.TYPE.SUCCESS });
+          toast("Thành công", { type: toast.TYPE.SUCCESS });
           setIsEdited(true);
         })
         .catch((err) => toast(err.message, { type: toast.TYPE.ERROR }));

@@ -1,6 +1,6 @@
 import Mainpage from "../../components/Dashboard/Mainpage"
 import Homestay from "../../components/Dashboard/Homestay"
-import Reservation from "../../components/Dashboard/Reservation"
+import Reservation from "../../components/Dashboard/Reservation/Reservation"
 import Sales from "../../components/Dashboard/Sales"
 import Setting from "../../components/Dashboard/Setting"
 import User from "../../components/Dashboard/User"

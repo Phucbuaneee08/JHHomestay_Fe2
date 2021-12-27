@@ -1,8 +1,11 @@
+import React from 'react';
 
-function Homestay() {
+import HomestayTable from "../Homestay/HomestayTable"
+
+function Homestay() { 
     return(
         <div>
-            <h1>Homestay</h1>
+            <HomestayTable />
         </div>
     )
 

@@ -1,71 +1,37 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/solid";
 import { Fragment } from "react";
-import UserData from "./Modal/UserData";
-import DatetimeData from "./Modal/DatetimeData";
-import ServiceData from "./Modal/ServiceData";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const UpdateModal = (props) => {
-  const [isOpen, setIsOpen] = props.editProps;
+const ConfirmModal = (props) => {
+  const [isOpen, setIsOpen] = props.confirmProps;
   const closeModal = () => setIsOpen(false);
 
-  const [modalData, setModalData] = props.editDataProps;
-  const { id } = props.status;
+  const { _id } = props.data;
   const token = props.token;
-  const setIsEdited = props.setIsEdited;
-  const setIsConfirmOpen = props.setIsConfirmOpen;
 
-  const handleRejectClick = () => {
-    // Call API remove bill from database
-    setIsConfirmOpen(true);
-    closeModal();
-  };
+  const setIsRemoved = props.setIsRemoved;
 
-  const handleAcceptClick = () => {
-    if (id === 1) {
-      // Call API - Move this Bill from Accepted to Paid
-      toast("Đang chờ...", { type: toast.TYPE.INFO });
-      axios({
-        method: "PUT",
-        url: "http://localhost:8000/admins/update/bills",
-        data: {
-          ...modalData,
-          homestayId: modalData.homestay,
-          status: 3,
-        },
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
-        .then(() => {
-          toast("Thành công", { type: toast.TYPE.SUCCESS });
-          setIsEdited(true);
-        })
-        .catch((err) => toast(err.message, { type: toast.TYPE.ERROR }));
-    } else {
-      // Call API - Move this Bill from Pending to Accepted
-      toast("Đang chờ...", { type: toast.TYPE.INFO });
-      axios({
-        method: "PUT",
-        url: "http://localhost:8000/admins/update/bills",
-        data: {
-          ...modalData,
-          homestayId: modalData.homestay,
-          status: 1,
-        },
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
-        .then(() => {
-          toast("Thành công", { type: toast.TYPE.SUCCESS });
-          setIsEdited(true);
-        })
-        .catch((err) => toast(err.message, { type: toast.TYPE.ERROR }));
-    }
+  const handleRemoveBill = () => {
     closeModal();
+    toast("Đang chờ...", { type: toast.TYPE.INFO });
+    console.log(_id);
+    axios({
+      method: "DELETE",
+      url: `http://localhost:8000/admins/delete/bills/${_id}`,
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then(() => {
+        toast("Thành công", { type: toast.TYPE.SUCCESS });
+        setIsRemoved(true);
+      })
+      .catch((err) => {
+        console.log(err);
+        toast(err.message, { type: toast.TYPE.ERROR });
+      });
   };
 
   return (
@@ -105,13 +71,13 @@ const UpdateModal = (props) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="inline-block max-w-2xl w-2/3 p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+              <div className="inline-block w-1/3 p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
                 <div className="relative">
                   <Dialog.Title
                     as="h3"
                     className="text-xl font-bold leading-6 text-gray-900 text-center"
                   >
-                    Thông tin chi tiết
+                    Bạn thật sự muốn xóa?
                   </Dialog.Title>
                   <button
                     className="absolute top-0 left-0 rounded-full transition ease-in-out duration-400 hover:bg-gray-200"
@@ -123,15 +89,10 @@ const UpdateModal = (props) => {
 
                 <div className="my-4 border-t border-b max-h-xl overflow-y-auto overflow-x-hidden">
                   <div className="m-4">
-                    <UserData
-                      userData={modalData.customer}
-                      accompanyData={modalData.customerTogether}
-                    />
-                    <DatetimeData
-                      timedateProps={[modalData, setModalData]}
-                      id={id}
-                    />
-                    <ServiceData serviceProps={modalData.servicesPerBill} />
+                    Việc bạn xóa đơn này có thể ảnh hưởng đến chất lượng dịch vụ
+                    của Homestay.
+                    <br />
+                    <strong>Bạn có thực sự muốn xóa?</strong>
                   </div>
                 </div>
 
@@ -139,16 +100,16 @@ const UpdateModal = (props) => {
                   <button
                     type="button"
                     className="inline-flex justify-center px-4 py-2 text-sm font-medium text-gray-900 bg-gray-100 border border-transparent rounded-md hover:bg-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                    onClick={handleRejectClick}
+                    onClick={closeModal}
                   >
-                    {id === 1 ? "Từ chối" : "Hủy đơn"}
+                    Quay lại
                   </button>
                   <button
                     type="button"
                     className="inline-flex justify-center px-4 py-2 text-sm font-medium text-green-900 bg-green-100 border border-transparent rounded-md hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                    onClick={handleAcceptClick}
+                    onClick={handleRemoveBill}
                   >
-                    {id === 1 ? "Chấp nhận" : "Xác nhận"}
+                    Xác nhận
                   </button>
                 </div>
               </div>
@@ -160,4 +121,4 @@ const UpdateModal = (props) => {
   );
 };
 
-export default UpdateModal;
+export default ConfirmModal;

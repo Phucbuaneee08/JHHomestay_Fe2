@@ -7,6 +7,7 @@ import BillStatusPicker from "./BillStatusPicker";
 import BillData from "./BillData";
 import { toast } from "react-toastify";
 import UpdateModal from "./UpdateModal";
+import ConfirmModal from "./ComfirmModal";
 
 function Reservation() {
   /* Token for admin action */
@@ -23,9 +24,10 @@ function Reservation() {
 
   /* Loading State */
   const [isLoading, setIsLoading] = useState(false);
-  
+
   /* Edit State - Use for reload data after edit */
   const [isEdited, setIsEdited] = useState(false);
+  const [isRemoved, setIsRemoved] = useState(false);
 
   /* Data for table */
   const [data, setData] = useState([]);
@@ -33,30 +35,34 @@ function Reservation() {
     if (homestay === undefined) return;
     setIsLoading(true);
     setIsEdited(false);
+    setIsRemoved(false);
 
     /* Call Data from back-end */
-    axios
-      .get("http://localhost:8000/admins/bills-of-homestay", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        params: {
-          status: status.id,
-          id: homestay._id,
-        },
-      })
+    axios({
+      method: "GET",
+      url: "http://localhost:8000/admins/bills-of-homestay",
+      params: {
+        status: status.id,
+        id: homestay._id,
+      },
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
       .then((res) => {
         setIsLoading(false);
         setData(res.data.content);
       })
       .catch((e) => {
+        console.log(e.message);
         setIsLoading(false);
         toast(e.message, { type: toast.TYPE.ERROR });
       });
-  }, [homestay, status, isEdited]);
+  }, [homestay, status, isEdited, isRemoved]);
 
   /* Modal state */
   const [isOpen, setIsOpen] = useState(false);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
   /* Data for Modal */
   const [modalData, setModalData] = useState({});
@@ -92,6 +98,13 @@ function Reservation() {
         status={status}
         token={token}
         setIsEdited={setIsEdited}
+        setIsConfirmOpen={setIsConfirmOpen}
+      />
+      <ConfirmModal
+        confirmProps={[isConfirmOpen, setIsConfirmOpen]}
+        data={modalData}
+        token={token}
+        setIsRemoved={setIsRemoved}
       />
     </>
   );

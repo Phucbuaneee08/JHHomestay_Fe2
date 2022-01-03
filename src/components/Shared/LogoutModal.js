@@ -1,18 +1,18 @@
-import { Dialog, Transition } from '@headlessui/react'
-import { Fragment} from 'react'
-import { useDispatch } from 'react-redux'
+import { Dialog, Transition } from "@headlessui/react";
+import { Fragment } from "react";
+import { useDispatch } from "react-redux";
 
 export default function LogoutModal(props) {
-  const dispatch = useDispatch()
-  let [isOpen, setIsOpen] = props.logoutProp
+  const dispatch = useDispatch();
+  let [isOpen, setIsOpen] = props.logoutProp;
 
   function closeModal() {
-    setIsOpen(false)
+    setIsOpen(false);
   }
   function logoutHandler() {
-    dispatch({type:"LOGOUT"})
+    localStorage.removeItem("homestayData");
+    dispatch({ type: "LOGOUT" });
   }
-
 
   return (
     <>
@@ -60,7 +60,8 @@ export default function LogoutModal(props) {
                 </Dialog.Title>
                 <div className="mt-2">
                   <p className="text-sm text-gray-500">
-                    Thao tác này sẽ đăng xuất tài khoản của bạn. Bạn có muốn tiếp tục?
+                    Thao tác này sẽ đăng xuất tài khoản của bạn. Bạn có muốn
+                    tiếp tục?
                   </p>
                 </div>
 
@@ -80,12 +81,11 @@ export default function LogoutModal(props) {
                     Đăng xuất
                   </button>
                 </div>
-                
               </div>
             </Transition.Child>
           </div>
         </Dialog>
       </Transition>
     </>
-  )
+  );
 }

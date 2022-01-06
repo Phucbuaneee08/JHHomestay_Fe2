@@ -33,13 +33,11 @@ function Modal (props){
         }, null
     )
     const formData = new FormData();
-    const [imageSelected, setImageSelected]=useState([])
+    const [imageSelected, setImageSelected]=useState('')
 
     const handleSubmit = (e) =>{
         e.preventDefault();
-        // for (let i = 0 ; i < imageSelected.length ; i++) {
-        //     formData.append("files", imageSelected[i]);
-        // }
+
         formData.append("files", imageSelected)
         formData.append("name", infor.name)
         formData.append("province", infor.province)
@@ -50,9 +48,9 @@ function Modal (props){
         formData.append("adminId", infor.adminId)
         formData.append("area", infor.area)
         formData.append("description", infor.description)
-        formData.append("amenities", amenities)
-        formData.append("services", services)
-        formData.append("generalServices", generalServices)
+        formData.append("amenities", JSON.stringify(amenities))
+        formData.append("services", JSON.stringify(services))
+        formData.append("generalServices", JSON.stringify(generalServices))
 
         if (infor.name === "") {
             toast.error("Chưa điền Tên homestay");

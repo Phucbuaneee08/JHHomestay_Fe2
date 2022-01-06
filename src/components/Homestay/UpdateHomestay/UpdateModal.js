@@ -15,7 +15,7 @@ function UpdateModal (props){
     const [amenities, setAmenities] = useState([])
     const [services, setServices] = useState([])
     const [generalServices, setGeneralServices] = useState([])
-    const [imageSelected, setImageSelected]=useState([])
+    const [imageSelected, setImageSelected]=useState('')
     const closeModal = () =>{ 
         setIsOpen(false);
         setAmenities(amenities)
@@ -44,7 +44,9 @@ function UpdateModal (props){
 
     const updateSubmit = (e) =>{
         e.preventDefault();
+
         formData.append("_id", _id)
+        formData.append("files", imageSelected)
         formData.append("name", infor.name)
         formData.append("province", infor.province)
         formData.append("district", infor.district)
@@ -54,10 +56,9 @@ function UpdateModal (props){
         formData.append("adminId", infor.adminId)
         formData.append("area", infor.area)
         formData.append("description", infor.description)
-        formData.append("amenities", amenities)
-        formData.append("services", services)
-        formData.append("generalServices", generalServices)
-
+        formData.append("amenities", JSON.stringify(amenities))
+        formData.append("services", JSON.stringify(services))
+        formData.append("generalServices", JSON.stringify(generalServices))
         if (infor.name === "") {
             toast.error("Chưa điền Tên homestay");
           } else if (infor.province === "") {

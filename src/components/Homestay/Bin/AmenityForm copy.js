@@ -13,14 +13,6 @@ const amenityList = [
 
 const AmenityForm = (props) => {
   const [amenity, setAmenity] = props.amenityProps;
-  amenityList.map(item => item.checked=false)
-  amenity.map(item1 => (
-      amenityList.map(item2 =>
-        {
-          if (item1.name===item2.name) item2.checked=true
-        })
-  ))  
-  console.log(amenityList)
   
   return (
     <div className="p-2 border-t ">
@@ -28,28 +20,14 @@ const AmenityForm = (props) => {
       <div className="grid grid-cols-2 gap-2 px-4">
       {amenityList.map((item, index) => (
           <label class="text-gray-700">
-            {!item.checked ?
-            (<input 
-                type="checkbox"
-                value=""
-                defaultChecked={false}
-                onClick={() => {
-                  amenity.push(item); 
-                  item.checked=true
-                }}
-
-            />) : (
-              <input 
-                  type="checkbox"
-                  value=""
-                  defaultChecked
-                  onClick={() => {
-                    amenity.splice(amenity.indexOf(item),1); 
-                    item.checked=false
-                  }}
-              />
-            )
-            }
+            <input 
+              type="checkbox"
+              value="" 
+              onClick={() => {
+                if (!item.checked) {amenity.push(item); item.checked=true}
+                else {amenity.splice(amenity.indexOf(item),1); item.checked=false}
+              }}
+            />
             <span class="ml-2">{item.name}</span>
             
           </label>

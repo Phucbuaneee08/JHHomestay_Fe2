@@ -4,21 +4,16 @@ import axios from "axios";
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
 
-import CreateForm from "./CreateForm";
+import CreateForm from "../CreateHomestay/CreateForm";
 
 function Modal (props){
     const [isOpen, setIsOpen] = props.openProps;
-    const closeModal = () => {
-        setIsOpen(false);
-        setInfor({})
-        setAmenities([])
-        setServices([])
-        setGeneralServices([])
-    }
+    const closeModal = () => setIsOpen(false);
 
     const [amenities, setAmenities]= useState([])
     const [generalServices, setGeneralServices] = useState([])
     const [services, setServices] = useState([])
+
     const [infor, setInfor] = useState(
         {
             name: "" ,
@@ -32,35 +27,31 @@ function Modal (props){
             adminId:""
         }, null
     )
-    const formData = new FormData();
-    const [imageSelected, setImageSelected]=useState([])
-
+    const [homestay, setHomestay]=useState({
+        infor, amenities, generalServices, services
+    })
     const handleSubmit = (e) =>{
         e.preventDefault();
-        // for (let i = 0 ; i < imageSelected.length ; i++) {
-        //     formData.append("files", imageSelected[i]);
-        // }
-        formData.append("files", imageSelected)
-        formData.append("name", infor.name)
-        formData.append("province", infor.province)
-        formData.append("district", infor.district)
-        formData.append("address", infor.address)
-        formData.append("type", infor.type)
-        formData.append("price", infor.price)
-        formData.append("adminId", infor.adminId)
-        formData.append("area", infor.area)
-        formData.append("description", infor.description)
-        formData.append("amenities", amenities)
-        formData.append("services", services)
-        formData.append("generalServices", generalServices)
-
         if (infor.name === "") {
             toast.error("Chưa điền Tên homestay");
         } else if (infor.province === "") {
             toast.error("Chưa điền Tỉnh/ Thành phố");
         } else 
         try {
-            axios.post('http://localhost:8000/super-admins/create/homestays', formData)
+            axios.post('http://localhost:8000/super-admins/create/homestays', {
+                name: infor.name,
+                province: infor.province,
+                district: infor.district,
+                address: infor.address,
+                type: infor.type,
+                price: infor.price,
+                adminId: infor.adminId,
+                description: infor.description,
+                are: infor.area,
+                amenities: amenities,
+                generalServices: generalServices,
+                services: services
+            })
             toast.success("Thêm mới Homestay thành công!")
             setIsOpen(false)
             setAmenities([])
@@ -77,18 +68,17 @@ function Modal (props){
                 price : 0,
                 adminId:""
             }, null)
-            // console.log(formData)
-            // console.log(amenities)
-            // console.log(services)
-            // console.log(generalServices)
-            console.log(imageSelected)
         } catch(err) {
             console.log(err.message)
         }    
         
     }
 
-    
+    const uploadHomestay=(files) =>{
+        const formData=new FormData();
+        formData.append("files", files[0])
+        formData.append("homestay", homestay)
+    }
     return (
         <div>
             <Transition appear show={isOpen} as={Fragment}>
@@ -153,13 +143,14 @@ function Modal (props){
                                 </div>
                                 <CreateForm 
                                     inforProps={[infor, setInfor]}
-                                    state="create"
                                     serviceProps={[services, setServices]}
                                     amenityProps={[amenities, setAmenities]}
                                     generalProps={[generalServices, setGeneralServices]}
-                                    imageProps={[imageSelected, setImageSelected]}
                                 />
-                               
+                                <input
+                                    type="file"
+                                    onChange={(e)=>uploadHomestay(e.target.files)}
+                                />
                             </div>
 
                             <div className="text-center">

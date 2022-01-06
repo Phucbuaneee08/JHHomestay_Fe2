@@ -1,0 +1,138 @@
+import React, {useState, useEffect} from "react";
+import axios from "axios";
+import NewService from "./NewService";
+
+const ServiceForm = (props) => {
+  const [service, setService] = props.serviceProps;
+  const [serviceList, setServiceList] = useState([])
+  const [addService, setAddService] = useState(false)
+  
+  useEffect(() => {
+    const fetchData = async() => {
+        try {
+            const {data: response} = await axios.get('http://localhost:8000/services');
+            setServiceList(response.content)
+            console.log(response.content)
+        } 
+        catch (error) {
+            console.error(error.message);
+          }
+    }
+    fetchData()
+  }, [])
+  let temp=[]
+  // service && service.length ?
+  //   {service.map(s => TemplateIcon.push(s.name))} : null
+  service.map(s => temp.push(s.name))
+  const [newService, setNewService] = useState({})
+
+  const handleInput = (e) => {
+    const temp= {...newService}
+    temp[e.target.name] = e.target.value 
+    setNewService(temp)
+    // service.push(newService)
+    console.log(newService)
+};
+
+  const handleAdd=()=>{
+    service.push(newService);
+    alert("đã thêm service!")
+  }
+  const [openNew, setOpenNew]=useState(false)
+  return (
+    <div className="p-2 border-t ">
+      <h1 className="font-bold h-6 mb-4 text-gray-600 text-sm leading-8 uppercase"> Dịch vụ đặt kèm </h1>
+      <div className="grid grid-cols-2 gap-2 px-4">
+      {serviceList.map((item, index) => (
+          <label class="text-gray-700">
+            <input 
+              type="checkbox"
+              value="" 
+              onClick={() => {
+                if (!item.checked) {service.push(item); item.checked=true}
+                else {service.splice(service.indexOf(item),1); item.checked=false}
+              }}
+            />
+            <span class="ml-2">{item.name}</span>
+          </label>
+        ))}
+
+        {/* add new service */}
+       {/* <div>
+         <label htmlFor="name" className="flex flex-col p-2">
+             <div class="font-bold h-6 text-gray-600 text-sm leading-8 uppercase">
+                 <span class="text-red-400 mr-1">*</span> 
+                 Tên dịch vụ
+             </div>
+             <input
+                required
+                className="border px-4 py-2 rounded-md focus:outline-none"
+                id="name"
+                type="text"
+                name="name"
+                value={newService.name}
+                onChange = {(e) => handleInput (e)}
+            />
+        </label>
+        <label htmlFor="pricePerUnit" className="flex flex-col p-2">
+            <div class="font-bold h-6 mt-3 text-gray-600 text-sm leading-8 uppercase">
+                Giá/ người
+            </div>                
+            <input
+                className="border px-4 py-2 rounded-md focus:outline-none"
+                id="pricePerUnit"
+                type="text"
+                name="pricePerUnit"
+                pattern="[0-9]*"
+                value={newService.pricePerUnit}
+                onChange = {(e) => handleInput (e)}
+            />
+        </label>
+        <label htmlFor="personServe" className="flex flex-col p-2">
+            <div class="font-bold h-6 mt-3 text-gray-600 text-sm leading-8 uppercase">
+                Số người phục vụ
+            </div>                
+            <input
+                className="border px-4 py-2 rounded-md focus:outline-none"
+                id="personServe"
+                type="text"
+                name="personServe"
+                pattern="[0-9]*"
+                value={newService.personServe}
+                onChange = {(e) => handleInput (e)}
+            />
+        </label>
+        <div className="text-center">
+          <button 
+              className="
+                  inline-flex justify-center px-4 py-2 text-md font-medium shadow-md 
+                  text-white bg-green-600 border border-transparent rounded-md 
+                  focus:cursor-pointer hover:bg-green-700 text-lg text-center"
+              onClick={(e) => {
+                  handleAdd(e);
+                  }}
+              >
+          Thêm
+          </button>
+      </div>
+     
+      </div> */}
+        {/* {service.map(i => (<p> {i.name}</p>))} */}
+      {/* <div>
+        <button
+          onClick={setOpenNew(true)}
+        >
+          +
+        </button>
+        <NewService newServiceProps={newService} 
+          openProps={[openNew, setOpenNew]}
+        />
+      </div> */}
+        
+      </div>
+      
+    </div>
+  );
+};
+
+export default ServiceForm;

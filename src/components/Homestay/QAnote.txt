@@ -1,18 +1,20 @@
 - refresh sau khi create, update, delete
-- các trường required -> thông báo lỗi
++ các trường required -> thông báo lỗi
     ?? lúc lỗi lúc đc :)
 - handle add service *
 - update phải có sự thay đổi
-- upload photo (form data) -> đợi api *
-- check xong bỏ check -> bị lặp chứ k xóa đi *
-- update đang lỗi *
++ upload photo (form data) -> đợi api *
++ check xong bỏ check -> bị lặp chứ k xóa đi 
+  + con cua services nua
+- Chọn update, xóa name xong X => mất mẹ name trong form luôn :)
++ update đang lỗi *
     / amenities, services, general services 
       -> liên quan checkbox dcm phức tạp z
     / admin
 - call api thừa ??
-- Check lại code
+- Check lại code, thêm chú thích code
 - rảnh thì sửa pagination cho đẹp
-- bảo BE check api create (amenities, .. k nhập vào DB? -> do commit mới nhất hqua)
+- lỗi upload
 
 DONE
 + fix width column table 
@@ -20,6 +22,7 @@ DONE
 + noti update thành công
 + confirm delete
 + update information
++ bảo BE check api create (amenities, .. k nhập vào DB? -> do commit mới nhất hqua)
 
 
 

@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux'
 function InformationForm(props){
     const [homestay, setHomestay] = props.inforProps;
     const [admin, setAdmin] = useState([])
-    const state=props.state;
 
     const handleInput = (e) => {
         const newHomestay = {...homestay}
@@ -55,7 +54,7 @@ function InformationForm(props){
                 <div class="font-bold h-6 mt-3 text-gray-600 text-sm leading-8 uppercase">
                     Admin
                 </div>
-                {state==="create" ? (<select 
+                <select 
                     name = "adminId"
                     value={homestay.adminId} 
                     onChange={(e) => handleInput (e)}
@@ -67,18 +66,6 @@ function InformationForm(props){
                         
                     ):null}
                 </select>
-                ) : (
-                <select 
-                    name = "adminId"
-                    value={homestay.adminId} 
-                    onChange={(e) => handleInput (e)}
-                    className="border rounded-md px-4 py-2"
-                >
-                    <option className="text-gray-300"> -- null -- </option>
-                    {admin && admin.length ? admin.map(admin=>
-                        <option value={admin._id}> {admin.name} </option> 
-                    ):null}
-                </select>)}
             </label>
 
             <label htmlFor="province" className="flex flex-col p-2">
@@ -184,7 +171,7 @@ function InformationForm(props){
                     Mô tả
                 </div>
                 <input
-                    className="border px-4 py-2 rounded-md focus:outline-none"
+                    className="border px-4 py-2 rounded-md focus:outline-none h-auto"
                     id="description"
                     type="text"
                     name="description"

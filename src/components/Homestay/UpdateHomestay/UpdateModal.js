@@ -5,24 +5,33 @@ import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
 
 import CreateForm from "../../Homestay/CreateHomestay/CreateForm.js";
+// import CreateForm from "./CreateForm"
 
 function UpdateModal (props){
     const [isOpen, setIsOpen] = props.openProp;
     const _id=props._id
-    const closeModal = () => setIsOpen(false);
 
     const [infor, setInfor] = useState({})
-
-    const [generalServices, setGeneralServices] = useState([])
-    const [services, setServices] = useState([])
     const [amenities, setAmenities] = useState([])
+    const [services, setServices] = useState([])
+    const [generalServices, setGeneralServices] = useState([])
+    const [imageSelected, setImageSelected]=useState([])
+    const closeModal = () =>{ 
+        setIsOpen(false);
+        setAmenities(amenities)
+        setServices(services)
+        setGeneralServices(generalServices)
+        setInfor(infor)
+    }
 
     useEffect(() => {
         const fetchData = async() => {
             try {
                 const {data: response} = await axios.get(`http://localhost:8000/homestays/information/${_id}`);
                 setInfor(response.content.homestay)
-                console.log(response.content.homestay)
+                setServices(response.content.homestay.services)
+                setAmenities(response.content.homestay.amenities)
+                setGeneralServices(response.content.homestay.generalServices)
             } 
             catch (error) {
                 console.error(error.message);
@@ -31,45 +40,34 @@ function UpdateModal (props){
         fetchData()
       }, [])
 
-    const createSubmit = (e) =>{
+    const formData = new FormData();
+
+    const updateSubmit = (e) =>{
         e.preventDefault();
+        formData.append("_id", _id)
+        formData.append("name", infor.name)
+        formData.append("province", infor.province)
+        formData.append("district", infor.district)
+        formData.append("address", infor.address)
+        formData.append("type", infor.type)
+        formData.append("price", infor.price)
+        formData.append("adminId", infor.adminId)
+        formData.append("area", infor.area)
+        formData.append("description", infor.description)
+        formData.append("amenities", amenities)
+        formData.append("services", services)
+        formData.append("generalServices", generalServices)
+
         if (infor.name === "") {
             toast.error("Chưa điền Tên homestay");
           } else if (infor.province === "") {
             toast.error("Chưa điền Tỉnh/ Thành phố");
           } else 
           try {
-            axios.put('http://localhost:8000/homestays/update', {
-                _id: _id,
-                name: infor.name,
-                province: infor.province,
-                district: infor.district,
-                address: infor.address,
-                type: infor.type,
-                area: infor.area,
-                price: infor.price,
-                description: infor.description,
-                adminId: infor.adminId,
-                amenities: amenities,
-                generalServices: generalServices,
-                services: services
-            })
+            axios.put('http://localhost:8000/homestays/update', formData)
             toast.success("Cập nhật thông tin Homestay thành công")
             setIsOpen(false)
-            setAmenities([])
-            setGeneralServices([])
-            setServices([])
-            setInfor({
-                name: "" ,
-                province: "",
-                district : "",
-                address : "",
-                type: "",
-                area: "",
-                description: "",
-                price : 0,
-                adminId:""
-            }, null)
+            console.log(_id)
             } catch (err) {
                 console.log(err.message)
             }    
@@ -121,11 +119,13 @@ function UpdateModal (props){
                                     as="h3"
                                     className="text-xl font-bold leading-6 text-gray-900 text-center"
                                 >
-                                    Tạo Homestay mới
+                                    Cập nhật thông tin Homestay
                                 </Dialog.Title>
                                 <button
                                     className="absolute top-0 right-0 rounded-full transition ease-in-out duration-400 hover:bg-gray-200"
-                                    onClick={closeModal}
+                                    onClick={() => {
+                                        // setDefault(); 
+                                    closeModal()}}
                                 >
                                     <XIcon className="w-6 h-6" />
                                 </button>
@@ -138,10 +138,13 @@ function UpdateModal (props){
                                 </div>
                                 <CreateForm 
                                     inforProps={[infor, setInfor]}
+                                    state="update"
                                     amenityProps={[amenities, setAmenities]}
                                     generalProps={[generalServices, setGeneralServices]}
                                     serviceProps={[services, setServices]}
+                                    imageProps={[imageSelected, setImageSelected]}
                                 />
+                               
                             </div>
 
                             <div className="text-center">
@@ -151,7 +154,7 @@ function UpdateModal (props){
                                         text-white bg-green-600 border border-transparent rounded-md 
                                         focus:cursor-pointer hover:bg-green-700 text-lg text-center"
                                     onClick={(e) => {
-                                        createSubmit(e);
+                                        updateSubmit(e);
                                         }}
                                     >
                                 Xác nhận

@@ -32,13 +32,16 @@ function Modal (props){
             adminId:""
         }, null
     )
-    const formData = new FormData();
     const [imageSelected, setImageSelected]=useState('')
 
     const handleSubmit = (e) =>{
         e.preventDefault();
 
-        formData.append("files", imageSelected)
+        const formData = new FormData();
+        console.log("image1 ", imageSelected)
+        for(let i = 0; i < imageSelected?.length; i++) {
+            formData.append("files", imageSelected[i])
+        }
         formData.append("name", infor.name)
         formData.append("province", infor.province)
         formData.append("district", infor.district)
@@ -58,7 +61,11 @@ function Modal (props){
             toast.error("Chưa điền Tỉnh/ Thành phố");
         } else 
         try {
-            axios.post('http://localhost:8000/super-admins/create/homestays', formData)
+            axios.post('http://localhost:8000/super-admins/create/homestays', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
             toast.success("Thêm mới Homestay thành công!")
             setIsOpen(false)
             setAmenities([])
@@ -75,11 +82,7 @@ function Modal (props){
                 price : 0,
                 adminId:""
             }, null)
-            // console.log(formData)
-            // console.log(amenities)
-            // console.log(services)
-            // console.log(generalServices)
-            console.log(imageSelected)
+            console.log("image2 ", imageSelected)
         } catch(err) {
             console.log(err.message)
         }    
@@ -155,7 +158,7 @@ function Modal (props){
                                     serviceProps={[services, setServices]}
                                     amenityProps={[amenities, setAmenities]}
                                     generalProps={[generalServices, setGeneralServices]}
-                                    imageProps={[imageSelected, setImageSelected]}
+                                    imageProps={setImageSelected}
                                 />
                                
                             </div>

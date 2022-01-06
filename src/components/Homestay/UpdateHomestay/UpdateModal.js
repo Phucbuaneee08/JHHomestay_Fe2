@@ -40,13 +40,14 @@ function UpdateModal (props){
         fetchData()
       }, [])
 
-    const formData = new FormData();
-
     const updateSubmit = (e) =>{
         e.preventDefault();
 
+        const formData = new FormData();
         formData.append("_id", _id)
-        formData.append("files", imageSelected)
+        for(let i = 0; i < imageSelected?.length; i++) {
+            formData.append("files", imageSelected[i])
+        }
         formData.append("name", infor.name)
         formData.append("province", infor.province)
         formData.append("district", infor.district)
@@ -65,7 +66,11 @@ function UpdateModal (props){
             toast.error("Chưa điền Tỉnh/ Thành phố");
           } else 
           try {
-            axios.put('http://localhost:8000/homestays/update', formData)
+            axios.put('http://localhost:8000/homestays/update', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
             toast.success("Cập nhật thông tin Homestay thành công")
             setIsOpen(false)
             console.log(_id)
@@ -143,7 +148,7 @@ function UpdateModal (props){
                                     amenityProps={[amenities, setAmenities]}
                                     generalProps={[generalServices, setGeneralServices]}
                                     serviceProps={[services, setServices]}
-                                    imageProps={[imageSelected, setImageSelected]}
+                                    imageProps={setImageSelected}
                                 />
                                
                             </div>

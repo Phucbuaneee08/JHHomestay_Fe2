@@ -14,6 +14,7 @@ function Modal (props){
         setAmenities([])
         setServices([])
         setGeneralServices([])
+        setImageSelected('')
     }
 
     const [amenities, setAmenities]= useState([])
@@ -55,9 +56,9 @@ function Modal (props){
         formData.append("services", JSON.stringify(services))
         formData.append("generalServices", JSON.stringify(generalServices))
 
-        if (infor.name === "") {
+        if (infor.name === "" || infor.name===undefined) {
             toast.error("Chưa điền Tên homestay");
-        } else if (infor.province === "") {
+        } else if (infor.province === "" || infor.province===undefined) {
             toast.error("Chưa điền Tỉnh/ Thành phố");
         } else 
         try {
@@ -82,6 +83,7 @@ function Modal (props){
                 price : 0,
                 adminId:""
             }, null)
+            setImageSelected('')
             console.log("image2 ", imageSelected)
         } catch(err) {
             console.log(err.message)

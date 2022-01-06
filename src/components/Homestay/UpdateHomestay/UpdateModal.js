@@ -60,9 +60,10 @@ function UpdateModal (props){
         formData.append("amenities", JSON.stringify(amenities))
         formData.append("services", JSON.stringify(services))
         formData.append("generalServices", JSON.stringify(generalServices))
-        if (infor.name === "") {
+        
+        if (infor.name === "" || infor.name===undefined) {
             toast.error("Chưa điền Tên homestay");
-          } else if (infor.province === "") {
+        } else if (infor.province === "" || infor.province===undefined) {
             toast.error("Chưa điền Tỉnh/ Thành phố");
           } else 
           try {
@@ -130,7 +131,6 @@ function UpdateModal (props){
                                 <button
                                     className="absolute top-0 right-0 rounded-full transition ease-in-out duration-400 hover:bg-gray-200"
                                     onClick={() => {
-                                        // setDefault(); 
                                     closeModal()}}
                                 >
                                     <XIcon className="w-6 h-6" />

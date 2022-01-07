@@ -1,10 +1,18 @@
+import React, { useState} from "react";
+
+import DeleteModal from "./DeleteHomestay/DeleteModal";
+import UpdateModal from "./UpdateHomestay/UpdateModal"
+
 function HomestayCard (homestay){
-    const {name, province, district, admin, hasAdmin} = homestay.detail;
+    const {_id, name, province, district, admin, hasAdmin} = homestay.detail;
+ 
+    let [isOpen, setIsOpen] = useState(false);
+    const [update, setUpdate] = useState(false);
     return (
-        <tr>
+        <tr key={_id} className="break-all">
             <td className="px-6 py-4 whitespace-nowrap">
                 <div className="flex items-center">
-                    <div className="text-base font-medium text-gray-900">{name}</div>
+                    <div className="text-base font-medium text-gray-900 truncate">{name}</div>
                 </div>
             </td>
             <td className="px-6 py-4 whitespace-nowrap">
@@ -27,19 +35,39 @@ function HomestayCard (homestay){
                       ">
                         Chưa có admin
                     </span>)}
-                
             </td>
-            <td> 
-                {hasAdmin
-                ? (<p className="px-6 py-4 whitespace-nowrap text-base text-gray-500"> {admin.email} </p>)
-                : null}
+            <td>                 
+                { hasAdmin
+                ? (<p className="py-4 whitespace-nowrap text-base text-gray-500 truncate"> {admin.name} </p>)
+                : null
+                }
             </td>
-            {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{_id}</td> */}
-            <td className="px-6 py-4 whitespace-nowrap text-right text-base font-medium">
-                <a href="!#" className="text-indigo-600 hover:text-indigo-900">
+
+            <td className="px-3 py-4 whitespace-nowrap text-right text-base font-medium">
+                <button 
+                    className="text-indigo-600 hover:text-indigo-900"
+                    onClick={() => setUpdate(true)}
+                >
                 Cập nhật
-                </a>
+                </button>
             </td>
+
+            <td className="px-3 py-4 whitespace-nowrap text-center text-base font-medium">
+                <button 
+                    className="text-red-600 hover:text-red-900"
+                    onClick={()=> setIsOpen(true)}
+                >
+                Xóa
+                </button>
+            </td>
+            <DeleteModal 
+                deleteProp = {[isOpen, setIsOpen]} 
+                _id={_id}
+            />
+            <UpdateModal
+                openProp = {[update, setUpdate]}
+                _id={_id}
+            />
         </tr>
     )
 }

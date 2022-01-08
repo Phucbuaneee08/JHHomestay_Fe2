@@ -131,7 +131,7 @@ function Modal (props){
                             leaveTo="opacity-0 scale-95"
                         >
                         <div className="
-                            inline-block w-11/12 p-6 my-8 overflow-hidden text-left 
+                            inline-block w-1/2 p-6 my-8 overflow-hidden text-left 
                             align-middle transition-all transform bg-white shadow-xl rounded-2xl"
                             >
                             <div className="relative">

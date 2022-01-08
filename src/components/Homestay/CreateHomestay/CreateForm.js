@@ -5,21 +5,18 @@ import ServiceForm from "./ServiceForm";
 import AmenityForm from "./AmenityForm";
 import GeneralServiceForm from "./GeneralServiceForm";
 import Images from "./Images";
-
+import im from "./im";
 const CreateForm = (props) => {
     return (          
-        <div className="m-4 grid grid-cols-2 space-x-10">
+        <div className="m-4">
             <InformationForm 
                 inforProps={props.inforProps} 
                 state={props.state}
             />
-            <div>
-                <AmenityForm amenityProps={props.amenityProps} />
-                <GeneralServiceForm generalProps={props.generalProps} />
-                <ServiceForm serviceProps={props.serviceProps} />
-                <Images imageProps={props.imageProps}/>
-            </div>
-
+            <AmenityForm amenityProps={props.amenityProps} />
+            <GeneralServiceForm generalProps={props.generalProps} />
+            <ServiceForm serviceProps={props.serviceProps} />
+            <Images imageProps={props.imageProps}/>
         </div>
     );
   };

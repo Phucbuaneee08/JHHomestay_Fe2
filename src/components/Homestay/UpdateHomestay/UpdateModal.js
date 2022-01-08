@@ -32,6 +32,7 @@ function UpdateModal (props){
                 setServices(response.content.homestay.services)
                 setAmenities(response.content.homestay.amenities)
                 setGeneralServices(response.content.homestay.generalServices)
+                setImageSelected(response.content.homestay.photos)
             } 
             catch (error) {
                 console.error(error.message);
@@ -118,7 +119,7 @@ function UpdateModal (props){
                             leaveTo="opacity-0 scale-95"
                         >
                         <div className="
-                            inline-block w-11/12 p-6 my-8 overflow-hidden text-left 
+                            inline-block w-1/2 p-6 my-8 overflow-hidden text-left 
                             align-middle transition-all transform bg-white shadow-xl rounded-2xl"
                             >
                             <div className="relative">

@@ -2,6 +2,16 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from 'react-redux'
 
+const typeList=[
+    {name: "Căn hộ"},
+    {name: "Hotel"},
+    {name: "Biệt thực"},
+    {name: "Nhà riêng"},
+    {name: "Căn hộ Studio"},
+    {name: "Căn hộ chung cư"},
+    {name: "Căn hộ dịch vụ"},
+    {name: "Khác"}
+]
 function InformationForm(props){
     const [homestay, setHomestay] = props.inforProps;
     const [admin, setAdmin] = useState([])
@@ -139,16 +149,19 @@ function InformationForm(props){
                 <div class="font-bold h-6 mt-3 text-gray-600 text-sm leading-8 uppercase">
                     Loại homestay
                 </div>
-                <input
-                    className="border px-4 py-2 rounded-md focus:outline-none"
-                    id="type"
-                    type="text"
-                    name="type"
-                    value={homestay.type}
-                    onChange = {(e) => handleInput (e)}
-                />
+                <select 
+                    name = "type"
+                    value={homestay.type} 
+                    onChange={(e) => handleInput (e)}
+                    className="border rounded-md px-4 py-2"
+                >
+                    <option className="text-gray-300"> -- null -- </option>
+                    {typeList.map(t=>
+                        <option value={t.name}> {t.name} </option> 
+                    )}
+                </select>
             </label>
-
+            
             <label htmlFor="area" className="flex flex-col p-2">
                 <div class="font-bold h-6 mt-3 text-gray-600 text-sm leading-8 uppercase">
                     Diện tích
@@ -183,10 +196,9 @@ function InformationForm(props){
                 <div class="font-bold h-6 mt-3 text-gray-600 text-sm leading-8 uppercase">
                     Mô tả
                 </div>
-                <input
+                <textarea 
                     className="border px-4 py-2 rounded-md focus:outline-none"
                     id="description"
-                    type="text"
                     name="description"
                     value={homestay.description}
                     onChange = {(e) => handleInput (e)}

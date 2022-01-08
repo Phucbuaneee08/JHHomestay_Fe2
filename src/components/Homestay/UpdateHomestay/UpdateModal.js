@@ -11,6 +11,7 @@ function UpdateModal (props){
     const [isOpen, setIsOpen] = props.openProp;
     const _id=props._id
 
+    const [initialData, setIntitalData] = useState({})
     const [infor, setInfor] = useState({})
     const [amenities, setAmenities] = useState([])
     const [services, setServices] = useState([])
@@ -18,10 +19,10 @@ function UpdateModal (props){
     const [imageSelected, setImageSelected]=useState('')
     const closeModal = () =>{ 
         setIsOpen(false);
-        setAmenities(amenities)
-        setServices(services)
-        setGeneralServices(generalServices)
-        setInfor(infor)
+        setAmenities(initialData.amenities)
+        setServices(initialData.services)
+        setGeneralServices(initialData.generalServices)
+        setInfor(initialData.infor)
     }
 
     useEffect(() => {
@@ -33,6 +34,12 @@ function UpdateModal (props){
                 setAmenities(response.content.homestay.amenities)
                 setGeneralServices(response.content.homestay.generalServices)
                 setImageSelected(response.content.homestay.photos)
+                setIntitalData({
+                    infor: response.content.homestay,
+                    amenities: response.content.homestay.amenities,
+                    services: response.content.homestay.services,
+                    generalServices: response.content.homestay.generalServices
+                })
             } 
             catch (error) {
                 console.error(error.message);

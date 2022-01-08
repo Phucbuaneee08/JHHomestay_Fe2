@@ -3,7 +3,7 @@ import React from 'react';
 import HomestayCard from "./HomestayCard"
 
 function HomestayTable(props){
-    const [homestay, setHomestay] = props.homestayProps;
+    const [homestays, setHomestay] = props.homestayProps;
 
     return (
         <div class="container mt-8 mb-5 mx-auto w-full px-4">
@@ -52,8 +52,8 @@ function HomestayTable(props){
               </thead>
 
               <tbody className="bg-white divide-y divide-gray-200">
-                {homestay && homestay.length ?
-                homestay.map(homestay => (
+                {homestays && homestays.length ?
+                homestays.map(homestay => (
                     <HomestayCard detail = {homestay}/>
                 )): null}
               </tbody>

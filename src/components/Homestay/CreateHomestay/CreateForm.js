@@ -5,7 +5,6 @@ import ServiceForm from "./ServiceForm";
 import AmenityForm from "./AmenityForm";
 import GeneralServiceForm from "./GeneralServiceForm";
 import Images from "./Images";
-import im from "./im";
 const CreateForm = (props) => {
     return (          
         <div className="m-4">

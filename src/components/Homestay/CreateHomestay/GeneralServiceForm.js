@@ -13,6 +13,7 @@ const generalList = [
 
 const GeneralServiceForm = (props) => {
   const [general, setGeneral] = props.generalProps;
+
   generalList.map(item => item.checked=false)
   general.map(item1 => (
       generalList.map(item2 =>

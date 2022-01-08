@@ -1,82 +1,57 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const ServiceForm = (props) => {
-  const [service, setService] = props.serviceProps;
+  const [services, setServices] = props.serviceProps;
+  console.log(services)
   const [tempList, setTempList] = useState([])
-  
-  // get all services in homestays
-  useEffect(() => {
-    const fetchData = async() => {
-        try {
-            const {data: response} = await axios.get('http://localhost:8000/services');
-            setTempList(response.content)
-            console.log(response.content)
-        } 
-        catch (error) {
-            console.error(error.message);
-          }
-    }
-    fetchData()
-  }, [])
 
-  //add state checked or unchecked
-  function addCheckedState(tempList){
-    return {
-      _id: tempList._id,
-      name: tempList.name,
-      pricePerUnit: tempList.pricePerUnit,
-      personServe: tempList.personServe,
-      checked: false
-    };
+  function addServiceHandler() {
+    const tempServiceList = [...services, {
+      name: null,
+      pricePerUnit: null,
+      personServe: 1,
+    }]
+
+    setServices(tempServiceList)
   }
 
-  let serviceList = tempList.map(addCheckedState)
-  console.log(serviceList)
-
-  //set checked for services homestay had had
-  serviceList.map(item => item.checked=false)
-  service.map(item1 => (
-    serviceList.map(item2 =>
-        {
-          if (item1.name===item2.name) item2.checked=true
-        })
-  ))  
-
+  function deleteHandler(index) {
+    console.log(index)
+    const tempServiceList = [...services]
+    tempServiceList.splice(index, 1)
+    setServices(tempServiceList)
+  }
   return (
     <div className="p-2 border-t ">
-      <h1 className="font-bold h-6 mb-4 text-gray-600 text-sm leading-8 uppercase"> Dịch vụ đặt kèm </h1>
-      <div className="grid grid-cols-2 gap-2 px-4">
-      {serviceList.map((item, index) => (
-          <label class="text-gray-700">
-            {!item.checked ?
-            (<input 
-                type="checkbox"
-                value=""
-                defaultChecked={false}
-                onClick={() => {
-                  service.push(item); 
-                  item.checked=true
-                }}
-
-            />) : (
-              <input 
-                  type="checkbox"
-                  value=""
-                  defaultChecked
-                  onClick={() => {
-                    service.splice(service.indexOf(item),1); 
-                    item.checked=false
-                  }}
-              />
-            )
-            }
-            <span class="ml-2">{item.name}</span>
-            
-          </label>
-        ))}
+      <div className="flex flex-row justify-between">
+        <h1 className="font-bold h-6 mb-4 text-gray-600 text-sm leading-8 uppercase"> Dịch vụ đặt kèm </h1>
+        <h1 className="h-6 mb-4 text-gray-600 text-sm leading-8 uppercase cursor-pointer" onClick={addServiceHandler}> Thêm dịch vụ </h1>
       </div>
-      
+      {services.map((item, index) => (
+        <div className="flex flex-row">
+          <input
+            value={item.name}
+            type="text"
+            name="service-name"
+            id="service-name"
+            className=" px-4 py-2 border mt-2 focus:ring-green-500 focus:border-green-500 w-full mr-4 shadow-sm text-md border-gray-300 rounded-md focus:outline-none"
+          />
+          <input
+            value={item.pricePerUnit}
+            type="text"
+            name="service-price"
+            id="service-price"
+            className="px-4 py-2 border mt-2 focus:ring-green-500 focus:border-green-600 w-full ml-4 shadow-sm text-md border-gray-300 rounded-md focus:outline-none"
+          />
+          <div className="w-32 text-center self-center cursor-pointer">
+            <h1 className="text-red-600 hover:text-red-900" onClick={() =>deleteHandler(index)}>
+              Xóa
+            </h1>
+          </div>
+        </div>
+      ))}
+
     </div>
   );
 };

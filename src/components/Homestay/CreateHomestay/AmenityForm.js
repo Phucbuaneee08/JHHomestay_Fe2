@@ -23,7 +23,7 @@ const AmenityForm = (props) => {
   console.log(amenityList)
   
   return (
-    <div className="p-2 border-t ">
+    <div className="p-2 border-t">
       <h1 className="font-bold h-6 mb-4 text-gray-600 text-sm leading-8 uppercase"> Tiện nghi Homestay </h1>
       <div className="grid grid-cols-2 gap-2 px-4">
       {amenityList.map((item, index) => (

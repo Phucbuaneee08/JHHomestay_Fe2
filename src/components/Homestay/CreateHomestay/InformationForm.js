@@ -65,7 +65,8 @@ function InformationForm(props){
                 <div class="font-bold h-6 mt-3 text-gray-600 text-sm leading-8 uppercase">
                     Admin
                 </div>
-                {state==="create" ? (<select 
+                {state==="create" ? (
+                <select 
                     name = "adminId"
                     value={homestay.adminId} 
                     onChange={(e) => handleInput (e)}
@@ -80,7 +81,7 @@ function InformationForm(props){
                 ) : (
                 <select 
                     name = "adminId"
-                    value={homestay.adminId} 
+                    value={homestay.admin} 
                     onChange={(e) => handleInput (e)}
                     className="border rounded-md px-4 py-2"
                 >

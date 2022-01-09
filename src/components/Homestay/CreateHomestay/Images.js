@@ -4,10 +4,10 @@ import { XIcon } from "@heroicons/react/outline";
 function Images(props) {
     const [images, setImages] = useState([]);
     const setImageSelected=props.imageProps;
-    const [select, setSelect]=useState([])
     const [oldImages, setOldImages]=useState(props.oldImages);
     const setNewOldImages = props.setNewOldImages;
-    
+    const imagesState=props.imagesState
+
     const viewImage = (files) => {
         if (files) {
             let imagesData = [];
@@ -39,49 +39,74 @@ function Images(props) {
                 className="p-3"
                 onChange={(e)=> {
                     viewImage(e.target.files);
-                    setSelect(e.target.files);
                     setImageSelected(e.target.files)
                 }}
                 multiple={true}
             />
-            <div className="grid grid-cols-4 gap-4 relative">
-                {oldImages && oldImages.map((image, index) => {
-                    return (
-                        <div className="flex items-center">
-                            <img 
-                                className="h-20 w-32 rounded-md overflow-x-hidden overflow-y-hidden m-1" 
-                                key={index} 
-                                id={index} 
-                                src={`http://localhost:8000${image.url}`} 
-                                alt="images of homestays"
-                            />
-                            
-                            <button
-                            type="reset"
-                            className="z-30 absolute place-items-end"
-                            onClick={(e)=>{
-                                removeOldImage(image)
-                                }
-                            }
-                        >
-                            <XIcon className="w-7 h-7 mb-16 rounded-full bg-opacity-10 hover:bg-black hover:bg-opacity-20 p-1 text-white" />
-                        </button>
+            {oldImages && oldImages.length ? (
+                <div className="grid grid-cols-2 gap-2">
+                    <div> 
+                        <label className="font-semibold uppercase text-xs justify-center"> ẢNH CŨ </label>
+                        <div className="grid grid-cols-2 gap-4 relative border-2 border-dashed rounded-md">
+                        
+                            {oldImages && oldImages.map((image, index) => {
+                                return (
+                                    <div className="flex items-center">
+                                        <img 
+                                            className="h-20 w-32 rounded-md overflow-x-hidden overflow-y-hidden m-1" 
+                                            key={index} 
+                                            id={index} 
+                                            src={`http://localhost:8000${image.url}`} 
+                                            alt="images of homestays"
+                                        />
+                                        
+                                        <button
+                                        type="reset"
+                                        className="z-30 absolute place-items-end"
+                                        onClick={(e)=>{
+                                            removeOldImage(image)
+                                            }
+                                        }
+                                    >
+                                        <XIcon className="w-7 h-7 mb-16 rounded-full bg-opacity-10 hover:bg-black hover:bg-opacity-20 p-1 text-white" />
+                                    </button>
+                                    </div>
+                                    )
+                            })}
                         </div>
-                        )
-                })}
-            
-                {(images.length || 0 ) && images.map((image, index) => {
-                    return (
-                        <div className="flex items-center">
-                            <img className="h-20 w-32 rounded-md overflow-x-hidden overflow-y-hidden m-1"
-                                key={index} 
-                                id={index} 
-                                src={image} 
-                                alt="images of homestays"
-                            />
-                    </div>)
-                })}
-            </div>
+                    </div>
+                    <div>
+                        <label className="font-semibold uppercase text-xs justify-center">ẢNH MỚI</label>
+                        <div className="grid grid-cols-2 gap-4 relative border-2 border-dashed rounded-md">
+                            {(images.length || 0 ) && images.map((image, index) => {
+                                return (
+                                    <div className="flex items-center">
+                                        <img className="h-20 w-32 rounded-md overflow-x-hidden overflow-y-hidden m-1"
+                                            key={index} 
+                                            id={index} 
+                                            src={image} 
+                                            alt="images of homestays"
+                                        />
+                                </div>)
+                            })}
+                        </div>
+                    </div>
+                </div>
+                ) : (
+                <div className="grid grid-cols-4 gap-4 relative border-2 border-dashed rounded-md">
+                    {(images.length || 0 ) && images.map((image, index) => {
+                        return (
+                            <div className="flex items-center">
+                                <img className="h-20 w-32 rounded-md overflow-x-hidden overflow-y-hidden m-1"
+                                    key={index} 
+                                    id={index} 
+                                    src={image} 
+                                    alt="images of homestays"
+                                />
+                        </div>)
+                    })}
+                </div>
+            )}
         </div> 
         
     )

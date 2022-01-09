@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 
 const ServiceForm = (props) => {
   const [services, setServices] = props.serviceProps;
   console.log(services)
-  const [tempList, setTempList] = useState([])
 
   function addServiceHandler() {
     const tempServiceList = [...services, {
       name: null,
       pricePerUnit: null,
-      personServe: 0,
+      personServe: 1,
     }]
 
     setServices(tempServiceList)

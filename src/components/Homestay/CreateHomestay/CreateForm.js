@@ -16,7 +16,11 @@ const CreateForm = (props) => {
             <AmenityForm amenityProps={props.amenityProps} />
             <GeneralServiceForm generalProps={props.generalProps} />
             <ServiceForm serviceProps={props.serviceProps} />
-            <Images imageProps={props.imageProps} oldImages={props.oldImages} setNewOldImages={props.setNewOldImages}/>
+            <Images 
+                imageProps={props.imageProps} 
+                oldImages={props.oldImages} 
+                setNewOldImages={props.setNewOldImages}
+            />
         </div>
     );
   };

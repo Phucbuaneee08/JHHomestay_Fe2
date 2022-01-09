@@ -5,7 +5,8 @@ function Images(props) {
     const [images, setImages] = useState([]);
     const setImageSelected=props.imageProps;
     const [select, setSelect]=useState([])
-    const oldImages=props.oldImages;
+    const [oldImages, setOldImages]=useState(props.oldImages);
+    const setNewOldImages = props.setNewOldImages;
     
     const viewImage = (files) => {
         if (files) {
@@ -18,24 +19,12 @@ function Images(props) {
         }
     }
 
-    const removeImage =(index, e) =>{
-        const temp=[...images]
-        console.log("index", index)
-        temp.splice(index, 1)
-        setImages(temp)
-
-
-        const t = [...select]
-        t.splice(index, 1)
-        setSelect(t)
-        setImageSelected(select)
-        console.log("images",images)
-    }
-    const removeOldImage =(index, e) =>{
-        oldImages.splice(index, 1)
-        console.log("OldIndex", index)
-        console.log("oldImages", oldImages)
-
+    const removeOldImage =(image) =>{
+        let images = oldImages.filter((o) => {
+            return o.url !== image.url;
+        })
+        setOldImages(images);
+        setNewOldImages(images);
     }
 
     return (
@@ -71,7 +60,7 @@ function Images(props) {
                             type="reset"
                             className="z-30 absolute place-items-end"
                             onClick={(e)=>{
-                                removeOldImage(index, e)
+                                removeOldImage(image)
                                 }
                             }
                         >
@@ -90,16 +79,6 @@ function Images(props) {
                                 src={image} 
                                 alt="images of homestays"
                             />
-                            <button
-                                type="reset"
-                                className="z-30 absolute place-items-end"
-                                // onClick={(e)=>{
-                                //     removeImage(index, e)
-                                //     }
-                                // }
-                            >
-                                <XIcon className="w-7 h-7 mb-16 rounded-full bg-opacity-10 hover:bg-black hover:bg-opacity-20 p-1 text-white" />
-                            </button>
                     </div>)
                 })}
             </div>

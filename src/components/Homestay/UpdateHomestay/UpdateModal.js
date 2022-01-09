@@ -167,6 +167,7 @@ function UpdateModal (props){
                                     serviceProps={[services, setServices]}
                                     imageProps={setImageSelected}
                                     oldImages={oldImages}
+                                    setNewOldImages={setOldImages}
                                 />
                                
                             </div>

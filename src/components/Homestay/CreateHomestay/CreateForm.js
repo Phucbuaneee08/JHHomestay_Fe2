@@ -5,6 +5,7 @@ import ServiceForm from "./ServiceForm";
 import AmenityForm from "./AmenityForm";
 import GeneralServiceForm from "./GeneralServiceForm";
 import Images from "./Images";
+
 const CreateForm = (props) => {
     return (          
         <div className="m-4">
@@ -15,7 +16,7 @@ const CreateForm = (props) => {
             <AmenityForm amenityProps={props.amenityProps} />
             <GeneralServiceForm generalProps={props.generalProps} />
             <ServiceForm serviceProps={props.serviceProps} />
-            <Images imageProps={props.imageProps}/>
+            <Images imageProps={props.imageProps} oldImages={props.oldImages}/>        
         </div>
     );
   };

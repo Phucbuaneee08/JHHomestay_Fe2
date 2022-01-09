@@ -22,6 +22,7 @@ const AmenityForm = (props) => {
   ))  
   console.log(amenityList)
   
+  const tempAmenity = [...amenity]
   return (
     <div className="p-2 border-t">
       <h1 className="font-bold h-6 mb-4 text-gray-600 text-sm leading-8 uppercase"> Tiện nghi Homestay </h1>
@@ -34,7 +35,8 @@ const AmenityForm = (props) => {
                 value=""
                 defaultChecked={false}
                 onClick={() => {
-                  amenity.push(item); 
+                  tempAmenity.push(item)
+                  setAmenity(tempAmenity)
                   item.checked=true
                 }}
 
@@ -44,7 +46,8 @@ const AmenityForm = (props) => {
                   value=""
                   defaultChecked
                   onClick={() => {
-                    amenity.splice(amenity.indexOf(item),1); 
+                    tempAmenity.splice(tempAmenity.indexOf(item),1); 
+                    setAmenity(tempAmenity)
                     item.checked=false
                   }}
               />

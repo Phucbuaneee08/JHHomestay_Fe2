@@ -1,4 +1,5 @@
 import { Fragment, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Dialog, Transition } from "@headlessui/react";
@@ -16,13 +17,18 @@ function UpdateModal (props){
     const [amenities, setAmenities] = useState([])
     const [services, setServices] = useState([])
     const [generalServices, setGeneralServices] = useState([])
-    const [imageSelected, setImageSelected]=useState('')
-    const closeModal = () =>{ 
+    const [imageSelected, setImageSelected]=useState([])
+    const [oldImages, setOldImages]=useState([])
+
+    const { token } = useSelector((state) => state.authReducer);
+
+    const closeModal = () =>{
         setIsOpen(false);
         setAmenities(initialData.amenities)
         setServices(initialData.services)
         setGeneralServices(initialData.generalServices)
         setInfor(initialData.infor)
+        setOldImages(initialData.photos)
     }
 
     useEffect(() => {
@@ -33,12 +39,13 @@ function UpdateModal (props){
                 setServices(response.content.homestay.services)
                 setAmenities(response.content.homestay.amenities)
                 setGeneralServices(response.content.homestay.generalServices)
-                setImageSelected(response.content.homestay.photos)
+                setOldImages(response.content.homestay.photos)                
                 setIntitalData({
                     infor: response.content.homestay,
                     amenities: response.content.homestay.amenities,
                     services: response.content.homestay.services,
-                    generalServices: response.content.homestay.generalServices
+                    generalServices: response.content.homestay.generalServices,
+                    photos: response.content.homestay.photos
                 })
             } 
             catch (error) {
@@ -68,7 +75,8 @@ function UpdateModal (props){
         formData.append("amenities", JSON.stringify(amenities))
         formData.append("services", JSON.stringify(services))
         formData.append("generalServices", JSON.stringify(generalServices))
-        
+        formData.append("photos", JSON.stringify(oldImages))
+
         if (infor.name === "" || infor.name===undefined) {
             toast.error("Chưa điền Tên homestay");
         } else if (infor.province === "" || infor.province===undefined) {
@@ -77,7 +85,8 @@ function UpdateModal (props){
           try {
             axios.put('http://localhost:8000/homestays/update', formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data'
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: "Bearer " + token,
                 }
             })
             toast.success("Cập nhật thông tin Homestay thành công")
@@ -126,7 +135,7 @@ function UpdateModal (props){
                             leaveTo="opacity-0 scale-95"
                         >
                         <div className="
-                            inline-block w-1/2 p-6 my-8 overflow-hidden text-left 
+                            inline-block w-3/5 p-6 my-8 overflow-hidden text-left 
                             align-middle transition-all transform bg-white shadow-xl rounded-2xl"
                             >
                             <div className="relative">
@@ -157,6 +166,7 @@ function UpdateModal (props){
                                     generalProps={[generalServices, setGeneralServices]}
                                     serviceProps={[services, setServices]}
                                     imageProps={setImageSelected}
+                                    oldImages={oldImages}
                                 />
                                
                             </div>

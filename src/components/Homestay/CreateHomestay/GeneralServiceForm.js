@@ -13,7 +13,6 @@ const generalList = [
 
 const GeneralServiceForm = (props) => {
   const [general, setGeneral] = props.generalProps;
-
   generalList.map(item => item.checked=false)
   general.map(item1 => (
       generalList.map(item2 =>
@@ -21,6 +20,7 @@ const GeneralServiceForm = (props) => {
           if (item1.name===item2.name) item2.checked=true
         })
   ))  
+  const tempGeneral=[...general]
   return (
     <div className="p-2 border-t ">
       <h1 className="font-bold h-6 mb-4 text-gray-600 text-sm leading-8 uppercase"> Dịch vụ chung </h1>
@@ -33,7 +33,8 @@ const GeneralServiceForm = (props) => {
                 value=""
                 defaultChecked={false}
                 onClick={() => {
-                  general.push(item); 
+                  tempGeneral.push(item); 
+                  setGeneral(tempGeneral)
                   item.checked=true
                 }}
 
@@ -43,7 +44,8 @@ const GeneralServiceForm = (props) => {
                   value=""
                   defaultChecked
                   onClick={() => {
-                    general.splice(general.indexOf(item),1); 
+                    tempGeneral.splice(tempGeneral.indexOf(item),1); 
+                    setGeneral(tempGeneral)
                     item.checked=false
                   }}
               />

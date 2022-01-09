@@ -1,4 +1,5 @@
 import { Fragment, useState } from "react";
+import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { Dialog, Transition } from "@headlessui/react";
@@ -16,6 +17,7 @@ function Modal (props){
         setGeneralServices([])
         setImageSelected('')
     }
+    const { token } = useSelector((state) => state.authReducer);
 
     const [amenities, setAmenities]= useState([])
     const [generalServices, setGeneralServices] = useState([])
@@ -33,7 +35,7 @@ function Modal (props){
             adminId:""
         }, null
     )
-    const [imageSelected, setImageSelected]=useState('')
+    const [imageSelected, setImageSelected]=useState([''])
 
     const handleSubmit = (e) =>{
         e.preventDefault();
@@ -64,7 +66,8 @@ function Modal (props){
         try {
             axios.post('http://localhost:8000/super-admins/create/homestays', formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data'
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: "Bearer " + token,
                 }
             })
             toast.success("Thêm mới Homestay thành công!")
@@ -131,7 +134,7 @@ function Modal (props){
                             leaveTo="opacity-0 scale-95"
                         >
                         <div className="
-                            inline-block w-1/2 p-6 my-8 overflow-hidden text-left 
+                            inline-block w-3/5 p-6 my-8 overflow-hidden text-left 
                             align-middle transition-all transform bg-white shadow-xl rounded-2xl"
                             >
                             <div className="relative">

@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useSelector } from 'react';
+import React, { useState, useEffect} from 'react';
+import { useSelector } from 'react-redux';
 import Modal from '../Homestay/CreateHomestay/Modal';
 import axios from 'axios';
 import Pagination from '../Homestay/Pagination';
@@ -11,6 +12,7 @@ function Homestay() {
     const perPage=15
 
     const [homestay, setHomestay] = useState([])
+    const { token } = useSelector((state) => state.authReducer);
 
     const [isLoading, setIsLoading] = useState(false);
     useEffect(() => {
@@ -18,7 +20,11 @@ function Homestay() {
         if (homestay === undefined) return;
         setIsLoading(true);
         try {
-              const {data: response} = await axios.get('http://localhost:8000/super-admins/homestays');
+              const {data: response} = await axios.get('http://localhost:8000/super-admins/homestays', {
+                headers: {
+                  Authorization: "Bearer " + token,
+                }
+              });
               setTotalPage(Math.ceil(response.content.length/perPage))
           } 
         

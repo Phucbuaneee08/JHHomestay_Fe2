@@ -2,15 +2,8 @@ import { Fragment, useEffect, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
 
-const billStatus = [
-  { id: 1, name: "Đã duyệt" },
-  { id: 2, name: "Đang chờ" },
-  { id: 3, name: "Đã thanh toán" },
-];
-
 function BillStatusPicker(props) {
   const [selected, setSelected] = props.statusProp;
-  useEffect(() => setSelected(billStatus[1]), []);
 
   return (
     <div className="flex flex-col pl-4">
@@ -39,7 +32,7 @@ function BillStatusPicker(props) {
                 leaveTo="opacity-0"
               >
                 <Listbox.Options className="absolute mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
-                  {billStatus.map((status) => (
+                  {props.billStatus.map((status) => (
                     <Listbox.Option
                       key={status.id}
                       className={({ active }) =>

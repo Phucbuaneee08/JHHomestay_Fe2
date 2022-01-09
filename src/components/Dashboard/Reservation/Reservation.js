@@ -9,12 +9,18 @@ import { toast } from "react-toastify";
 import UpdateModal from "./UpdateModal";
 import ConfirmModal from "./ComfirmModal";
 
+const billStatus = [
+  { id: 1, name: "Đã duyệt" },
+  { id: 2, name: "Đang chờ" },
+  { id: 3, name: "Đã thanh toán" },
+];
+
 function Reservation() {
   /* Token for admin action */
   const { token } = useSelector((state) => state.authReducer);
 
   /* Default status */
-  const [status, setStatus] = useState({ id: 2, name: "Đang chờ" });
+  const [status, setStatus] = useState(billStatus[2]);
 
   /* Handle empty array */
   const homestayList = useSelector((state) => state.homestayReducer);
@@ -75,7 +81,7 @@ function Reservation() {
             homestayProp={[homestay, setHomestay]}
             homestayList={homestayList}
           />
-          <BillStatusPicker statusProp={[status, setStatus]} />
+          <BillStatusPicker statusProp={[status, setStatus]} billStatus={billStatus}/>
         </div>
         {isLoading ? (
           <div className="flex justify-center mt-6">

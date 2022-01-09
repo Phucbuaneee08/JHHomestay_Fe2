@@ -7,7 +7,9 @@ const DatetimeData = (props) => {
   const [modalData, setModalData] = props.timedateProps;
   const [checkin, setCheckin] = useState(new Date(modalData.checkinDate));
   const [checkout, setCheckout] = useState(new Date(modalData.checkoutDate));
-  const { id }  = props.id;
+  const id  = props.id;
+
+  console.log(id);
 
   return (
     <div className="mt-4 border-b">
@@ -19,7 +21,7 @@ const DatetimeData = (props) => {
           </label>
           <DatePicker
             id="checkin"
-            disabled={id === 1}
+            disabled={id === 1 || id === 3}
             popperPlacement="top-start"
             selected={checkin}
             onChange={(date) => setCheckin(date)}
@@ -30,7 +32,7 @@ const DatetimeData = (props) => {
           <label htmlFor="checkout" className="w-full">Ngày check out:</label>
           <DatePicker
             id="checkout"
-            disabled={id === 1}
+            disabled={id === 1 || id === 3}
             popperPlacement="top-start"
             selected={checkout}
             onChange={(date) => setCheckout(date)}

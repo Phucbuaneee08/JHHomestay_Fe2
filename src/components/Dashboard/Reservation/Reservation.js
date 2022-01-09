@@ -20,7 +20,7 @@ function Reservation() {
   const { token } = useSelector((state) => state.authReducer);
 
   /* Default status */
-  const [status, setStatus] = useState(billStatus[2]);
+  const [status, setStatus] = useState(billStatus[1]);
 
   /* Handle empty array */
   const homestayList = useSelector((state) => state.homestayReducer);

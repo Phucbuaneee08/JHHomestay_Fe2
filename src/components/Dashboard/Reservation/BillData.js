@@ -65,7 +65,7 @@ const BillData = (props) => {
                         }}
                         className="p-2 border rounded-md hover:border-gray-500"
                       >
-                        Cập nhật
+                        {status.id === 3 ? 'Chi tiết' : 'Cập nhật'}
                       </button>
                     </td>
                   </tr>

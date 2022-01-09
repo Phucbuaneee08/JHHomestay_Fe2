@@ -10,9 +10,15 @@ const ServiceForm = (props) => {
     const tempServiceList = [...services, {
       name: null,
       pricePerUnit: null,
-      personServe: 1,
+      personServe: 0,
     }]
 
+    setServices(tempServiceList)
+  }
+
+  function inputHandler(e, index) {
+    const tempServiceList = [...services]
+    tempServiceList[index][e.target.name] = e.target.value
     setServices(tempServiceList)
   }
 
@@ -33,16 +39,18 @@ const ServiceForm = (props) => {
           <input
             value={item.name}
             type="text"
-            name="service-name"
+            name="name"
             id="service-name"
             className=" px-4 py-2 border mt-2 focus:ring-green-500 focus:border-green-500 w-full mr-4 shadow-sm text-md border-gray-300 rounded-md focus:outline-none"
+            onChange={(e) => inputHandler(e, index)}
           />
           <input
             value={item.pricePerUnit}
             type="text"
-            name="service-price"
+            name="pricePerUnit"
             id="service-price"
             className="px-4 py-2 border mt-2 focus:ring-green-500 focus:border-green-600 w-full ml-4 shadow-sm text-md border-gray-300 rounded-md focus:outline-none"
+            onChange={(e) => inputHandler(e, index)}
           />
           <div className="w-32 text-center self-center cursor-pointer">
             <h1 className="text-red-600 hover:text-red-900" onClick={() =>deleteHandler(index)}>

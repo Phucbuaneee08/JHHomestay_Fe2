@@ -25,7 +25,7 @@ function User() {
               }
         }
         fetchData()
-      })
+      },[])
     return(
         <div>
             <div>

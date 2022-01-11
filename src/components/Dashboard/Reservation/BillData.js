@@ -58,17 +58,15 @@ const BillData = (props) => {
                       {new Date(person.checkinDate).toLocaleString()}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                      {status.id === 3 ? null : (
-                        <button
-                          onClick={() => {
-                            setIsOpen(true);
-                            setModalData(person);
-                          }}
-                          className="p-2 border rounded-md hover:border-gray-500"
-                        >
-                          Cập nhật
-                        </button>
-                      )}
+                      <button
+                        onClick={() => {
+                          setIsOpen(true);
+                          setModalData(person);
+                        }}
+                        className="p-2 border rounded-md hover:border-gray-500"
+                      >
+                        {status.id === 3 ? 'Chi tiết' : 'Cập nhật'}
+                      </button>
                     </td>
                   </tr>
                 ))}

@@ -58,7 +58,6 @@ function AdminTable(props){
               </tbody>
             </table>
           </div>
-          
         </div>
     )
 }

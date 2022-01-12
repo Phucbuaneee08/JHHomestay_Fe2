@@ -1,9 +1,7 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment } from "react";
 import { useSelector } from "react-redux";
-import axios from "axios";
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
-import { toast } from "react-toastify";
 
 import HomestayList from "./HomestayList";
 
@@ -59,7 +57,7 @@ function AssignHomestay (props){
                                     as="h3"
                                     className="text-xl font-bold leading-6 text-gray-900 text-center"
                                 >
-                                    Chỉnh Sửa Thông Tin 
+                                    Homestay của Admin
                                 </Dialog.Title>
                                 <button
                                     className="absolute top-0 right-0 rounded-full transition ease-in-out duration-400 hover:bg-gray-200"

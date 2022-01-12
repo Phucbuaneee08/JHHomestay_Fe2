@@ -82,50 +82,6 @@ function ModalCreate (props){
                 console.log(infor)
                 toast(err.message)})
         }
-        
-        // try {
-        //     axios.post('http://localhost:8000/super-admins/create/admins', {
-        //         name: infor.name,
-        //         address: infor.address,
-        //         role: "admin",
-        //         email: infor.email,
-        //         password: infor.password,
-        //         phone: infor.phone,
-        //         status: 1,
-        //         gender: infor.gender,
-        //         indentification: infor.identification,
-        //         avatarUrl: infor.avatarUrl,
-        //         dateAtWork: infor.dateAtWork,
-        //         dateAtBirth: infor.dateAtBirth,
-        //         homestays: []
-        //     },
-        //     {
-        //         headers:{
-        //             Authorization: "Bearer " + token
-        //         }
-        //     })
-        //     console.log(infor)
-        //     toast.success("Thêm mới Admin thành công!")
-        //     setIsOpen(false)
-        //     setInfor({
-        //         name: "" ,
-        //         address: "",
-        //         role:"admin",
-        //         email : "",
-        //         password : "",
-        //         phone: "",
-        //         status: 1,
-        //         gender: "",
-        //         identification: "",
-        //         avatarUrl: "",
-        //         dateAtWork:"",
-        //         dateAtBirth:"",
-        //         homestay: [""]
-        //         })
-        // } catch(err) {
-        //     console.log(err.message)
-        // }    
-        //  }
 
     return(
         <div>

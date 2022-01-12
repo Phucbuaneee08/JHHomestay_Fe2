@@ -9,22 +9,21 @@ function User() {
     const { token } = useSelector((state) => state.authReducer);
     const [isCreate, setIsCreate] = useState(false)
     const [admin, setAdmin] = useState([])
+    const [isLoading,setIsLoading] = useState(true)
     
     useEffect(() => {
-        const fetchData = async() => {
-            try {
-                const {data: response} = await axios.get('http://localhost:8000/super-admins/get/admins', {
-                    headers:{
-                        Authorization: "Bearer " + token,
-                    }
-                });
-                setAdmin(response.content)
-            } 
-            catch (error) {
-                console.error(error.message);
-              }
-        }
-        fetchData()
+        axios({
+            method:'GET',
+            url:'http://localhost:8000/super-admins/get/admins',
+            headers:{
+                Authorization: "Bearer " + token
+            }
+        }).then((res)=>{
+            setAdmin(res.data.content)
+            setIsLoading(false)
+        }).catch((err)=>{
+            console.log(err)
+        })
       },[])
     return(
         <div>
@@ -43,11 +42,20 @@ function User() {
                 </button>
                     <ModalCreate openCreate={[isCreate, setIsCreate]} />
             </div>
+            {isLoading ? (
+            <div className="flex justify-center mt-6">
+            <div
+              className="w-16 h-16 border-8 border-green-400 rounded-full border-solid animate-spin"
+              style={{ borderTop: "8px solid transparent" }}
+            />
+            </div>
+            ) : (
                 <div className='pb-10'>
                     <AdminTable 
                         adminProps={[admin, setAdmin]}
                     />
-                    </div>    
+                </div>   
+            )}
         </div>
     )
 

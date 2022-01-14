@@ -3,6 +3,7 @@ import ReactDatePicker from "react-datepicker";
 
 function InformationForm(props){
     const [admin, setAdmin] = props.inforProps;
+    const showPassword = props.showPassword;
     const [dateWork,setDateWork] = useState(new Date());
     const [dateBirth,setDateBirth] = useState(new Date());
      
@@ -68,6 +69,7 @@ function InformationForm(props){
                 />
             </label>
 
+            { showPassword &&
             <label htmlFor="password" className="flex flex-col p-2">
                 <div class="font-bold h-6 mt-3 text-gray-600 text-sm leading-8 uppercase">
                 <span class="text-red-400 mr-1">*</span>
@@ -82,6 +84,7 @@ function InformationForm(props){
                     onChange = { (e) => handleInput(e) }
                 />
             </label>
+            }
 
             <label htmlFor="phone" className="flex flex-col p-2">
                 <div class="font-bold h-6 mt-3 text-gray-600 text-sm leading-8 uppercase">
@@ -164,23 +167,6 @@ function InformationForm(props){
                     onChange = {(e) => setDateWork (e)}
                 />
             </label>
-
-            <label htmlFor="avatarUrl" className="flex flex-col p-2">
-                <div class="font-bold h-6 text-gray-600 text-sm leading-8 uppercase">
-                    <span class="text-red-400 mr-1">*</span> 
-                    avatarUrl
-                </div>
-                <input
-                    required
-                    className="border px-4 py-2 rounded-md focus:outline-none"
-                    id="avatarUrl"
-                    type="text"
-                    name="avatarUrl"
-                    value={admin.avatarUrl}
-                    onChange = {(e) => handleInput (e)}
-                />
-            </label>
-
         </div>
     )
 }

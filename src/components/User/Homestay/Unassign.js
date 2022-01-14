@@ -9,6 +9,7 @@ function Unassign(props) {
   const [unassignForm,setUnassignForm] = props.openProp
   const _idAdmin = props._idAdmin
   const _idHomestay = props._idHomestay
+  const [reload,setReload] = props.reload
   const [isUnassign, setIsUnassign] = useState(false)
 
   function closeModal() {
@@ -30,8 +31,9 @@ function Unassign(props) {
                 Authorization: "Bearer " + token
               }
           }).then((res)=>{
-              toast("Gỡ Thành Công")
+              toast.success("Gỡ Thành Công")
               console.log(res)
+              setReload(true)
           }).catch((err)=>{
               console.log(err)
           })

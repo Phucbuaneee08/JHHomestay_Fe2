@@ -10,8 +10,11 @@ function HomestayList(props){
     const { token } = useSelector((state) => state.authReducer);
     const [homestayList,setHomestayList] = useState([])
     const [isLoading,setIsLoading] = useState(true)
-   
+    const [reload,setReload] = useState(false)
+    const [idList,setIdList] = useState()
+
     useEffect(()=>{
+        setHomestayList([])
         axios({
             method: "GET",
             url:`http://localhost:8000/super-admins/get/admin/${_id}`,
@@ -19,9 +22,8 @@ function HomestayList(props){
                 Authorization: "Bearer " + token
             }
         }).then((res)=>{
-            const idList = [...res.data.content.homestays]
+            const idList =  res.data.content.homestays
             for(let i = 0; i <idList.length; i++){
-              console.log(idList[i])
                 axios({
                     method:"GET",
                     url:`http://localhost:8000/homestays/information/${idList[i]}`,
@@ -34,14 +36,13 @@ function HomestayList(props){
                     console.log(err)
                 })
             }
-            
         }).then(()=>{
           setIsLoading(false)
         }).catch((err)=>{
             console.log(err)
             toast(err.message)
         })
-    },[])
+    },[reload])
     return(
         <div>
           {isLoading ? (
@@ -79,7 +80,7 @@ function HomestayList(props){
               <tbody className="bg-white divide-y divide-gray-200">
                 {homestayList && homestayList.length ?
                 homestayList.map(homestay => (
-                    <EachHomestay homestay = {homestay} _idAdmin={_id} />
+                    <EachHomestay homestay = {homestay} _idAdmin={_id} reload={[reload,setReload]}/>
                 )): <p className="text-xl text-red-500">ADMIN CHƯA QUẢN LÍ HOMESTAY NÀO</p>}
               </tbody>
             </table>

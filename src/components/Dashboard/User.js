@@ -10,7 +10,7 @@ function User() {
     const [isCreate, setIsCreate] = useState(false)
     const [admin, setAdmin] = useState([])
     const [isLoading,setIsLoading] = useState(true)
-    
+    const [reload,setReload] = useState()
     useEffect(() => {
         axios({
             method:'GET',
@@ -21,10 +21,11 @@ function User() {
         }).then((res)=>{
             setAdmin(res.data.content)
             setIsLoading(false)
+            setReload(false)
         }).catch((err)=>{
             console.log(err)
         })
-      },[])
+      },[reload])
     return(
         <div>
             <div>
@@ -40,7 +41,7 @@ function User() {
                 >
                 + Thêm Admin
                 </button>
-                    <ModalCreate openCreate={[isCreate, setIsCreate]} />
+                    <ModalCreate openCreate={[isCreate, setIsCreate]} reload ={[reload,setReload]} />
             </div>
             {isLoading ? (
             <div className="flex justify-center mt-6">
@@ -53,6 +54,7 @@ function User() {
                 <div className='pb-10'>
                     <AdminTable 
                         adminProps={[admin, setAdmin]}
+                        reload = {[reload,setReload]}
                     />
                 </div>   
             )}

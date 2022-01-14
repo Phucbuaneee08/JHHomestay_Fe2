@@ -9,7 +9,7 @@ import InformationForm from "../UpdateAdmin/InformationForm";
 function ModalCreate (props){
 
     const { token } = useSelector((state) => state.authReducer);
-
+    const [reload,setReload] = props.reload;
     const [isOpen, setIsOpen] = props.openCreate;
     const closeModal = () => setIsOpen(false);
     const [infor, setInfor] = useState(
@@ -35,7 +35,18 @@ function ModalCreate (props){
             toast.error("Chưa điền Tên Admin");
         } else if (infor.address === "") {
             toast.error("Chưa điền địa chỉ Admin");
-        } else 
+        } else if(infor.email === ""){
+            toast.error("Chưa điền email Admin")
+        } else if(infor.password === ""){
+            toast.error("Chưa điền mật khẩu")
+        } else if(infor.phone === ""){
+            toast.error("Chưa điền số điện thoại")
+        } else if(infor.gender ===""){
+            toast.error("Chưa điền giới tính")
+        } else if(infor.identification === ""){
+            toast.error("Chưa điền căn cước công dân")
+        }
+        else 
             axios({
                 method: "POST",
                 url: "http://localhost:8000/super-admins/create/admins",
@@ -62,6 +73,7 @@ function ModalCreate (props){
                 console.log(res)
                 toast.success("Thêm mới Admin thành công!")
                 setIsOpen(false)
+                setReload(true)
                 setInfor({
                             name: "" ,
                             address: "",
@@ -122,7 +134,7 @@ function ModalCreate (props){
                             leaveTo="opacity-0 scale-95"
                         >
                         <div className="
-                            inline-block w-11/12 p-6 my-8 overflow-hidden text-left 
+                            inline-block w-3/5 p-6 my-8 overflow-hidden text-left 
                             align-middle transition-all transform bg-white shadow-xl rounded-2xl"
                             >
                             <div className="relative">
@@ -145,7 +157,7 @@ function ModalCreate (props){
                                     <span class="text-red-400 mr-1">*</span> 
                                     Các trường bắt buộc phải điền
                                 </div>
-                                <InformationForm inforProps = {[infor,setInfor]}></InformationForm>
+                                <InformationForm inforProps = {[infor,setInfor]} showPassword = {true}></InformationForm>
                             </div>
 
                             <div className="text-center">

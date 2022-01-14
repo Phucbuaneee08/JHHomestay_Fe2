@@ -6,6 +6,7 @@ import axios from 'axios';
 
 function DeleteAdmin(props) {
   const [deleteForm , setDeleteForm] = props.openProp;
+  const [reload,setReload] = props.reload
   const _id = props._id;
   const [isDeleted, setIsDeleted] = useState(false)
   function closeModal() {
@@ -23,6 +24,7 @@ function DeleteAdmin(props) {
       })
       .then((res) => {
         console.log(res)
+        setReload(true)
       })
       .catch((err) => {
         console.log(err)

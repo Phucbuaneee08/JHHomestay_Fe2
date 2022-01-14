@@ -1,10 +1,11 @@
 import React, { useState} from "react";
 import DeleteAdmin from "./DeleteAdmin/DeleteAdmin";
 import UpdateAdmin from "./UpdateAdmin/UpdateAdmin";
-import AssignHomestay from "./Homestay/Homestay";
+import Homestay from "./Homestay/Homestay";
 
 function AdminCard (props){
     const admin = props.detail;
+    const [reload,setReload] = props.reload
     const [assignForm,setAssignForm] = useState(false);
     const [deleteForm, setDeleteForm] = useState(false);
     const [updateForm, setUpdateForm] = useState(false);
@@ -49,7 +50,7 @@ function AdminCard (props){
                 </button>
             </td>
 
-            <AssignHomestay
+            <Homestay
                 openProp = {[assignForm,setAssignForm]}
                 _id = {admin._id}   
             />
@@ -57,11 +58,13 @@ function AdminCard (props){
             <UpdateAdmin
                 openProp ={ [updateForm, setUpdateForm]}
                 _id = {admin._id}
+                reload = {[reload,setReload]}
             />
 
             <DeleteAdmin 
                 openProp = {[deleteForm, setDeleteForm]} 
                 _id = {admin._id}
+                reload = {[reload,setReload]}
             />
             
             

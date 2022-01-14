@@ -5,8 +5,7 @@ import { XIcon } from "@heroicons/react/outline";
 
 import HomestayList from "./HomestayList";
 
-function AssignHomestay (props){
-    const { token } = useSelector((state) => state.authReducer);
+function Homestay (props){
     const [assignForm,setAssignForm] = props.openProp;
     const _id = props._id;
     const closeModal = () => setAssignForm(false);
@@ -92,4 +91,4 @@ function AssignHomestay (props){
         </div>
     )
 }
-export default AssignHomestay;
+export default Homestay;

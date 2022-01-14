@@ -4,7 +4,7 @@ import AdminCard from "./AdminCard"
 
 function AdminTable(props){
     const [admin, setAdmin] = props.adminProps;
-
+    const [reload,setReload] = props.reload;
     return (
         <div class="container mt-8 mb-5 mx-auto w-full px-4">
           <div className="mx-auto shadow overflow-hidden border-b border-gray-200 rounded-lg">
@@ -53,7 +53,7 @@ function AdminTable(props){
               <tbody className="bg-white divide-y divide-gray-200">
                 {admin && admin.length ?
                 admin.map(admin => (
-                    <AdminCard detail = {admin} />
+                    <AdminCard detail = {admin} reload ={[reload,setReload]}/>
                 )): null}
               </tbody>
             </table>

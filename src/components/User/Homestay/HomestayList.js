@@ -11,7 +11,6 @@ function HomestayList(props){
     const [homestayList,setHomestayList] = useState([])
     const [isLoading,setIsLoading] = useState(true)
     const [reload,setReload] = useState(false)
-    const [idList,setIdList] = useState()
 
     useEffect(()=>{
         setHomestayList([])

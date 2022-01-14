@@ -80,7 +80,7 @@ function InformationForm(props){
                 </select>
                 ) : (
                 <select 
-                    name = "adminId"
+                    name = "admin"
                     value={homestay.admin} 
                     onChange={(e) => handleInput (e)}
                     className="border rounded-md px-4 py-2"

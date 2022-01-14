@@ -69,7 +69,7 @@ function UpdateModal (props){
         formData.append("address", infor.address)
         formData.append("type", infor.type)
         formData.append("price", infor.price)
-        formData.append("adminId", infor.adminId)
+        formData.append("adminId", infor.admin)
         formData.append("area", infor.area)
         formData.append("description", infor.description)
         formData.append("amenities", JSON.stringify(amenities))

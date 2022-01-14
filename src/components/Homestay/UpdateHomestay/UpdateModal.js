@@ -11,7 +11,7 @@ import CreateForm from "../../Homestay/CreateHomestay/CreateForm.js";
 function UpdateModal (props){
     const [isOpen, setIsOpen] = props.openProp;
     const _id=props._id
-
+    const [reload,setReload] = props.reload
     const [initialData, setIntitalData] = useState({})
     const [infor, setInfor] = useState({})
     const [amenities, setAmenities] = useState([])
@@ -53,7 +53,7 @@ function UpdateModal (props){
               }
         }
         fetchData()
-      }, [])
+      }, [isOpen])
 
     const updateSubmit = (e) =>{
         e.preventDefault();
@@ -78,23 +78,32 @@ function UpdateModal (props){
         formData.append("photos", JSON.stringify(oldImages))
 
         if (infor.name === "" || infor.name===undefined) {
-            toast.error("Chưa điền Tên homestay");
-        } else if (infor.province === "" || infor.province===undefined) {
-            toast.error("Chưa điền Tỉnh/ Thành phố");
+            toast.error("Chưa điền Tên homestay")
           } else 
-          try {
-            axios.put('http://localhost:8000/homestays/update', formData, {
+          {
+            axios
+            .put('http://localhost:8000/homestays/update', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     Authorization: "Bearer " + token,
                 }
             })
-            toast.success("Cập nhật thông tin Homestay thành công")
-            setIsOpen(false)
-            console.log(_id)
-            } catch (err) {
+            .then (() => {
+                toast.success("Cập nhật thông tin Homestay thành công")
+                setIsOpen(false)
+                setAmenities(amenities)
+                setServices(services)
+                setGeneralServices(generalServices)
+                setInfor(infor)
+                setOldImages(oldImages)
+                setReload(true)
+                console.log(_id)
+            })
+            .catch (err => {
+                toast.error("Opps! Có lỗi xảy ra. Hãy thử lại")
                 console.log(err.message)
-            }    
+            })
+        }
     }
     return (
         <div>

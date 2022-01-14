@@ -10,14 +10,14 @@ function Homestay() {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPage, setTotalPage] = useState(null)
     const perPage=15
-
-    const [homestay, setHomestay] = useState([])
+    const [reload,setReload] = useState()
+    const [homestays, setHomestays] = useState([])
     const { token } = useSelector((state) => state.authReducer);
 
     const [isLoading, setIsLoading] = useState(false);
     useEffect(() => {
       const fetchData = async() => {
-        if (homestay === undefined) return;
+        if (homestays === undefined) return;
         setIsLoading(true);
         try {
               const {data: response} = await axios.get('http://localhost:8000/super-admins/homestays', {
@@ -36,8 +36,9 @@ function Homestay() {
               const {data: response} = await axios.get('http://localhost:8000/super-admins/homestays',{
                 params: {page: currentPage, perPage: perPage}
             } );
-              setHomestay(response.content)
+              setHomestays(response.content)
               setIsLoading(false);
+              setReload(false)
               console.log(response.content)
           } 
           catch (error) {
@@ -46,7 +47,7 @@ function Homestay() {
             }
       }
       fetchData()
-    }, [currentPage, perPage])
+    }, [currentPage, perPage, isOpen, reload])
 
     const paginate = pageNumber => setCurrentPage(pageNumber);
     return(
@@ -76,7 +77,8 @@ function Homestay() {
             ) : (
                 <div className='pb-10'>
                     <HomestayTable 
-                        homestayProps={[homestay, setHomestay]}
+                        homestaysProps={[homestays, setHomestays]}
+                        reload = {[reload,setReload]}
                     />
                     <Pagination
                         totalPage={totalPage}

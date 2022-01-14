@@ -14,15 +14,13 @@ const amenityList = [
 const AmenityForm = (props) => {
   const [amenity, setAmenity] = props.amenityProps;
   amenityList.map(item => item.checked=false)
-  amenity.map(item1 => (
-      amenityList.map(item2 =>
+  amenity?.map(item1 => (
+    amenityList.map(item2 =>
         {
           if (item1.name===item2.name) item2.checked=true
         })
   ))  
-  console.log(amenityList)
-  
-  const tempAmenity = [...amenity]
+  console.log("List", amenityList, "amenity", amenity)
   return (
     <div className="p-2 border-t">
       <h1 className="font-bold h-6 mb-4 text-gray-600 text-sm leading-8 uppercase"> Tiện nghi Homestay </h1>
@@ -34,10 +32,14 @@ const AmenityForm = (props) => {
                 type="checkbox"
                 value=""
                 defaultChecked={false}
-                onClick={() => {
-                  tempAmenity.push(item)
-                  setAmenity(tempAmenity)
-                  item.checked=true
+                onClick={(e) => {
+                  amenityList[index].checked=true
+                  const temp=amenityList.filter(i => i.checked===true)
+                  setAmenity(temp)
+                  console.log("checked",index, item.name)
+                  console.log("list", amenityList)
+                  console.log("amenity", amenity);
+                  
                 }}
 
             />) : (
@@ -46,9 +48,12 @@ const AmenityForm = (props) => {
                   value=""
                   defaultChecked
                   onClick={() => {
-                    tempAmenity.splice(tempAmenity.indexOf(item),1); 
-                    setAmenity(tempAmenity)
-                    item.checked=false
+                    amenityList[index].checked=false;
+                    const temp=amenityList.filter(i => i.checked===true)
+                    setAmenity(temp)
+                    console.log("unchecked", index, item.name)
+                    console.log("list", amenityList)
+                    console.log("amenity", temp);
                   }}
               />
             )

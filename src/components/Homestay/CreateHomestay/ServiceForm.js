@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 const ServiceForm = (props) => {
   const [services, setServices] = props.serviceProps;
-  console.log(services)
+  // console.log(services)
 
   function addServiceHandler() {
     const tempServiceList = [...services, {
@@ -39,6 +39,7 @@ const ServiceForm = (props) => {
             type="text"
             name="name"
             id="service-name"
+            placeholder="Tên dịch vụ"
             className=" px-4 py-2 border mt-2 focus:ring-green-500 focus:border-green-500 w-full mr-4 shadow-sm text-md border-gray-300 rounded-md focus:outline-none"
             onChange={(e) => inputHandler(e, index)}
           />
@@ -47,6 +48,7 @@ const ServiceForm = (props) => {
             type="text"
             name="pricePerUnit"
             id="service-price"
+            placeholder="Giá tiền"
             className="px-4 py-2 border mt-2 focus:ring-green-500 focus:border-green-600 w-full ml-4 shadow-sm text-md border-gray-300 rounded-md focus:outline-none"
             onChange={(e) => inputHandler(e, index)}
           />

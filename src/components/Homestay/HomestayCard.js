@@ -5,7 +5,7 @@ import UpdateModal from "./UpdateHomestay/UpdateModal"
 
 function HomestayCard (homestay){
     const {_id, name, province, district, admin, hasAdmin} = homestay.detail;
- 
+    const [reload,setReload] = homestay.reload
     let [isOpen, setIsOpen] = useState(false);
     const [update, setUpdate] = useState(false);
     return (
@@ -38,7 +38,7 @@ function HomestayCard (homestay){
             </td>
             <td>                 
                 { hasAdmin
-                ? (<p className="py-4 whitespace-nowrap text-base text-gray-500 truncate"> {admin.name} </p>)
+                ? (<p className="py-4 whitespace-nowrap text-base text-gray-500 truncate"> {admin?.name} </p>)
                 : null
                 }
             </td>
@@ -63,10 +63,12 @@ function HomestayCard (homestay){
             <DeleteModal 
                 deleteProp = {[isOpen, setIsOpen]} 
                 _id={_id}
+                reload = {[reload,setReload]}
             />
             <UpdateModal
                 openProp = {[update, setUpdate]}
                 _id={_id}
+                reload = {[reload,setReload]}
             />
         </tr>
     )

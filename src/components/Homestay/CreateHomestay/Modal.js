@@ -9,6 +9,7 @@ import CreateForm from "./CreateForm";
 
 function Modal (props){
     const [isOpen, setIsOpen] = props.openProps;
+    const [reload,setReload] = props.reload;
     const closeModal = () => {
         setIsOpen(false);
         setInfor({})
@@ -72,6 +73,7 @@ function Modal (props){
             .then (res => {
                 toast.success("Thêm mới Homestay thành công!")
                 setIsOpen(false)
+                setReload(true)
                 setAmenities([])
                 setGeneralServices([])
                 setServices([])

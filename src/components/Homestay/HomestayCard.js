@@ -1,11 +1,13 @@
 import React, { useState} from "react";
+import { useSelector } from 'react-redux'
 
 import DeleteModal from "./DeleteHomestay/DeleteModal";
 import UpdateModal from "./UpdateHomestay/UpdateModal"
 
 function HomestayCard (homestay){
-    const {_id, name, province, district, admin, hasAdmin} = homestay.detail;
+    const {_id, name, province, district, admin, adminName, hasAdmin} = homestay.detail;
     const [reload,setReload] = homestay.reload
+    const role = useSelector((state) => state.authReducer.role);
     let [isOpen, setIsOpen] = useState(false);
     const [update, setUpdate] = useState(false);
     return (
@@ -36,12 +38,19 @@ function HomestayCard (homestay){
                         Chưa có admin
                     </span>)}
             </td>
-            <td>                 
-                { hasAdmin
-                ? (<p className="py-4 whitespace-nowrap text-base text-gray-500 truncate"> {admin?.name} </p>)
-                : null
-                }
-            </td>
+            {role === "super_admin" ? (
+                <td>                 
+                    { hasAdmin
+                    ? (<p className="py-4 whitespace-nowrap text-base text-gray-500 truncate"> {admin?.name} </p>)
+                    : null
+                    }
+                </td>
+            ) : (
+                <td>                 
+                    <p className="py-4 whitespace-nowrap text-base text-gray-500 truncate"> {adminName} </p>
+                </td>
+            )}
+            
 
             <td className="px-3 py-4 whitespace-nowrap text-right text-base font-medium">
                 <button 
@@ -52,14 +61,25 @@ function HomestayCard (homestay){
                 </button>
             </td>
 
-            <td className="px-3 py-4 whitespace-nowrap text-center text-base font-medium">
-                <button 
-                    className="text-red-600 hover:text-red-900"
-                    onClick={()=> setIsOpen(true)}
-                >
-                Xóa
-                </button>
-            </td>
+            {role === "super_admin" ? (
+                <td className="px-3 py-4 whitespace-nowrap text-center text-base font-medium">
+                    <button 
+                        className="text-red-600 hover:text-red-900"
+                        onClick={()=> setIsOpen(true)}
+                    >
+                    Xóa
+                    </button>
+                </td>
+            ) : (
+                <td className="px-3 py-4 whitespace-nowrap text-center text-base font-medium">
+                    <button 
+                        className="text-red-600 hover:text-red-900 cursor-not-allowed"
+                    >
+                    Xóa
+                    </button>
+                </td>
+            )}
+            
             <DeleteModal 
                 deleteProp = {[isOpen, setIsOpen]} 
                 _id={_id}

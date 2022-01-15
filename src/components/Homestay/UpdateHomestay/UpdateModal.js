@@ -34,7 +34,12 @@ function UpdateModal (props){
     useEffect(() => {
         const fetchData = async() => {
             try {
-                const {data: response} = await axios.get(`http://localhost:8000/homestays/information/${_id}`);
+                const {data: response} = await axios.get(`http://localhost:8000/homestays/information/${_id}`, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: "Bearer " + token,
+                    }
+                });
                 setInfor(response.content.homestay)
                 setServices(response.content.homestay.services)
                 setAmenities(response.content.homestay.amenities)

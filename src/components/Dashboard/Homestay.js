@@ -39,7 +39,7 @@ function Homestay() {
               setHomestays(response.content)
               setIsLoading(false);
               setReload(false)
-              console.log(response.content)
+              //console.log(response.content)
           } 
           catch (error) {
               setIsLoading(false);

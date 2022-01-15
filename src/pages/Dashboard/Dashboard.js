@@ -1,8 +1,6 @@
-import Mainpage from "../../components/Dashboard/Mainpage"
 import Homestay from "../../components/Dashboard/Homestay"
 import Reservation from "../../components/Dashboard/Reservation/Reservation"
 import Sales from "../../components/Dashboard/Sales"
-import Setting from "../../components/Dashboard/Setting"
 import User from "../../components/Dashboard/User"
 import Sidebar from "../../components/Shared/Sidebar"
 import Header from "../../components/Shared/Header"
@@ -18,9 +16,6 @@ function Dashboard() {
             <div className="col-start-2 col-end-8 flex-shrink bg-white">
                 <Header email={email} />
                 <Switch>
-                    <Route path="/dashboard/mainpage" exact>
-                        <Mainpage />
-                    </Route>
                     <Route path="/dashboard/sales" exact>
                         <Sales />
                     </Route>
@@ -33,10 +28,7 @@ function Dashboard() {
                     <Route path="/dashboard/user-management" exact>
                         <User />
                     </Route>
-                    <Route path="/dashboard/setting" exact>
-                        <Setting />
-                    </Route>
-                    <Redirect path="/dashboard/mainpage"/>
+                    <Redirect path="/dashboard/homestay-mangement"/>
                 </Switch>
             </div>    
         </div>

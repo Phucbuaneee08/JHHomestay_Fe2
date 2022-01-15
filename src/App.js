@@ -42,7 +42,7 @@ function App() {
     routes = (
       <Switch>
         <Route path="/dashboard" component={Dashboard} />
-        <Redirect to="/dashboard/mainpage" />
+        <Redirect to="/dashboard/homestay-management" />
       </Switch>
     );
   else

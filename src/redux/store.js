@@ -1,7 +1,7 @@
 import { createStore, combineReducers,applyMiddleware } from "redux"
 
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { authReducer, homestayReducer } from "./reducers"
+import { authReducer, homestayReducer,  } from "./reducers"
 
 const rootReducer = combineReducers({authReducer, homestayReducer})
 

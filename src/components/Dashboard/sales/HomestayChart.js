@@ -28,6 +28,8 @@ const defaultData = [
 const HomestayChart = (props) => {
   const [homestay, year] = props.selected;
 
+  console.log(homestay);
+
   const [data, setData] = useState(defaultData);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -66,18 +68,17 @@ const HomestayChart = (props) => {
           />
         </div>
       ) : (
-        <div className="flex justify-center">
-          <LineChart
-            width={1200}
-            height={400}
-            data={data}
-          >
-            <Line type="monotone" dataKey="uv" stroke="#8884d8" />
-            <CartesianGrid stroke="#ccc" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-          </LineChart>
+        <div className="flex items-center flex-col">
+          <div className="ml-8">
+            <LineChart width={1200} height={400} data={data}>
+              <Line type="monotone" dataKey="uv" stroke="#8884d8" />
+              <CartesianGrid stroke="#ccc" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+            </LineChart>
+          </div>
+          <h1 className="text-3xl font-light mt-6">{homestay.name}</h1>
         </div>
       )}
     </>

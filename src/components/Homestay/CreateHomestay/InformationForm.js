@@ -16,6 +16,7 @@ function InformationForm(props){
     const [homestay, setHomestay] = props.inforProps;
     const [admin, setAdmin] = useState([])
     const state=props.state;
+    const role = useSelector((state) => state.authReducer.role);
 
     const handleInput = (e) => {
         const newHomestay = {...homestay}
@@ -60,37 +61,39 @@ function InformationForm(props){
                     onChange = {(e) => handleInput (e)}
                 />
             </label>
-
-            <label htmlFor="adminId" className="flex flex-col p-2">
-                <div class="font-bold h-6 mt-3 text-gray-600 text-sm leading-8 uppercase">
-                    Admin
-                </div>
-                {state==="create" ? (
-                <select 
-                    name = "adminId"
-                    value={homestay.adminId} 
-                    onChange={(e) => handleInput (e)}
-                    className="border rounded-md px-4 py-2"
-                >
-                    <option className="text-gray-300"> -- null -- </option>
-                    {admin && admin.length ? admin.map(admin=>
-                        <option value={admin._id}> {admin.name} </option> 
-                        
-                    ):null}
-                </select>
-                ) : (
-                <select 
-                    name = "admin"
-                    value={homestay.admin} 
-                    onChange={(e) => handleInput (e)}
-                    className="border rounded-md px-4 py-2"
-                >
-                    <option className="text-gray-300"> -- null -- </option>
-                    {admin && admin.length ? admin.map(admin=>
-                        <option value={admin._id}> {admin.name} </option> 
-                    ):null}
-                </select>)}
-            </label>
+            
+            {role === "super_admin" ? (
+                <label htmlFor="adminId" className="flex flex-col p-2">
+                    <div class="font-bold h-6 mt-3 text-gray-600 text-sm leading-8 uppercase">
+                        Admin
+                    </div>
+                    {state==="create" ? (
+                    <select 
+                        name = "adminId"
+                        value={homestay.adminId} 
+                        onChange={(e) => handleInput (e)}
+                        className="border rounded-md px-4 py-2"
+                    >
+                        <option className="text-gray-300"> -- null -- </option>
+                        {admin && admin.length ? admin.map(admin=>
+                            <option value={admin._id}> {admin.name} </option> 
+                            
+                        ):null}
+                    </select>
+                    ) : (
+                    <select 
+                        name = "admin"
+                        value={homestay.admin} 
+                        onChange={(e) => handleInput (e)}
+                        className="border rounded-md px-4 py-2"
+                    >
+                        <option className="text-gray-300"> -- null -- </option>
+                        {admin && admin.length ? admin.map(admin=>
+                            <option value={admin._id}> {admin.name} </option> 
+                        ):null}
+                    </select>)}
+                </label>
+            ) : null}
 
             <label htmlFor="province" className="flex flex-col p-2">
                 <div class="font-bold h-6 mt-3 text-gray-600 text-sm leading-8 uppercase">

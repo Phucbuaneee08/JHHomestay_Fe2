@@ -13,6 +13,7 @@ function Homestay() {
     const [reload,setReload] = useState()
     const [homestays, setHomestays] = useState([])
     const { token } = useSelector((state) => state.authReducer);
+    const role = useSelector((state) => state.authReducer.role);
 
     const [isLoading, setIsLoading] = useState(false);
     useEffect(() => {
@@ -34,7 +35,10 @@ function Homestay() {
 
           try {
               const {data: response} = await axios.get('http://localhost:8000/super-admins/homestays',{
-                params: {page: currentPage, perPage: perPage}
+                params: {page: currentPage, perPage: perPage},
+                headers: {
+                  Authorization: "Bearer " + token,
+                }
             } );
               setHomestays(response.content)
               setIsLoading(false);
@@ -47,12 +51,12 @@ function Homestay() {
             }
       }
       fetchData()
-    }, [currentPage, perPage, isOpen, reload])
+    }, [currentPage, perPage, reload])
 
     const paginate = pageNumber => setCurrentPage(pageNumber);
     return(
         <div>
-            <div>
+          {role==="super_admin" ? (<div>
             <button
                 className="
                 mx-2 my-2 px-3 py-2
@@ -65,8 +69,9 @@ function Homestay() {
             >
             + Thêm Homestay
             </button>
-                <Modal openProps={[isOpen, setIsOpen]}/>
-            </div>
+                <Modal openProps={[isOpen, setIsOpen]} reload={[reload, setReload]}/>
+            </div>) : null}
+            
             {isLoading ? (
           <div className="flex justify-center mt-6">
             <div

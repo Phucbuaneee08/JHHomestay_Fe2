@@ -59,39 +59,41 @@ function Modal (props){
         formData.append("generalServices", JSON.stringify(generalServices))
 
         if (infor.name === "" || infor.name===undefined) {
-            toast.error("Chưa điền Tên homestay");
-        } else if (infor.province === "" || infor.province===undefined) {
-            toast.error("Chưa điền Tỉnh/ Thành phố");
+            toast.error("Chưa điền Tên homestay")
         } else 
-        try {
-            axios.post('http://localhost:8000/super-admins/create/homestays', formData, {
+        {
+            axios
+            .post('http://localhost:8000/super-admins/create/homestays', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     Authorization: "Bearer " + token,
                 }
             })
-            toast.success("Thêm mới Homestay thành công!")
-            setIsOpen(false)
-            setAmenities([])
-            setGeneralServices([])
-            setServices([])
-            setInfor({
-                name: "" ,
-                province: "",
-                district : "",
-                address : "",
-                type: "",
-                area: "",
-                description: "",
-                price : 0,
-                adminId:""
-            }, null)
-            setImageSelected('')
-            console.log("image2 ", imageSelected)
-        } catch(err) {
-            console.log(err.message)
-        }    
-        
+            .then (res => {
+                toast.success("Thêm mới Homestay thành công!")
+                setIsOpen(false)
+                setAmenities([])
+                setGeneralServices([])
+                setServices([])
+                setInfor({
+                    name: "" ,
+                    province: "",
+                    district : "",
+                    address : "",
+                    type: "",
+                    area: "",
+                    description: "",
+                    price : 0,
+                    adminId:""
+                }, null)
+                setImageSelected('')
+                console.log("image2 ", imageSelected)
+            })
+            .catch(err=> {
+                toast.error("Opps! Có lỗi xảy ra. Hãy thử lại")
+                console.log(err.message)
+            })
+        }
     }
 
     

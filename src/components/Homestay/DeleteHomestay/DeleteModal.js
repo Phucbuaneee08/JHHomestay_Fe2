@@ -7,6 +7,7 @@ import axios from 'axios';
 function DeleteModal(props) {
   const [isOpen, setIsOpen] = props.deleteProp
   const _id=props._id;
+  const [reload,setReload] = props.reload
   const [isDeleted, setIsDeleted] = useState(false)
   function closeModal() {
     setIsOpen(false)
@@ -23,6 +24,7 @@ function DeleteModal(props) {
       })
       .then((res) => {
         console.log(res)
+        setReload(true)
       })
       .catch((err) => {
         console.log(err)

@@ -34,7 +34,7 @@ function InformationForm(props){
                     }
                 });
                 setAdmin(response.content)
-                console.log(response.content)
+                // console.log(response.content)
             } 
         catch (error) {
             console.error(error.message);
@@ -80,7 +80,7 @@ function InformationForm(props){
                 </select>
                 ) : (
                 <select 
-                    name = "adminId"
+                    name = "admin"
                     value={homestay.admin} 
                     onChange={(e) => handleInput (e)}
                     className="border rounded-md px-4 py-2"
@@ -94,11 +94,9 @@ function InformationForm(props){
 
             <label htmlFor="province" className="flex flex-col p-2">
                 <div class="font-bold h-6 mt-3 text-gray-600 text-sm leading-8 uppercase">
-                    <span class="text-red-400 mr-1">*</span> 
                     Tỉnh/ Thành phố
                 </div>
                 <input
-                    required
                     className="border px-4 py-2 rounded-md focus:outline-none"
                     id="province"
                     type="text"
@@ -165,7 +163,7 @@ function InformationForm(props){
             
             <label htmlFor="area" className="flex flex-col p-2">
                 <div class="font-bold h-6 mt-3 text-gray-600 text-sm leading-8 uppercase">
-                    Diện tích
+                    Diện tích (m2)
                 </div>                
                 <input
                     className="border px-4 py-2 rounded-md focus:outline-none"
@@ -180,7 +178,7 @@ function InformationForm(props){
 
             <label htmlFor="price" className="flex flex-col p-2">
                 <div class="font-bold h-6 mt-3 text-gray-600 text-sm leading-8 uppercase">
-                    Giá tiền
+                    Giá tiền (VND)
                 </div>                
                 <input
                     className="border px-4 py-2 rounded-md focus:outline-none"

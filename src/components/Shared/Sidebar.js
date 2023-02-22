@@ -5,7 +5,7 @@ import logo from "../../public/logo.svg";
 const sidebarVar = [
   {
     path: "/dashboard/sales",
-    title: "Sales",
+    title: "Revenue",
     icon: <svg
       xmlns="http://www.w3.org/2000/svg"
       className="h-6 w-6"
@@ -89,11 +89,12 @@ function Sidebar() {
     if (item.authorize === "all" || (item.authorize === role))
       if (location.pathname === item.path)
         return (
-          <li className="flex items-center mx-12 my-5 md:text-xl text-auto cursor-pointer text-gray-600 transform hover:scale-125 hover:text-green-700" >
+          <li style={{border: '6px solid rgba(0, 0, 0, 0.05)'}} className="flex items-center mx-12 my-5 md:text-xl text-auto cursor-pointer text-gray-600 transform hover:scale-125 hover:text-green-700" >
             {item.icon}
             <Link
               to={item.path}
               className="ml-2 text-green-600 font-bold md:text-2xl text-auto"
+
             >
               {item.title}
             </Link>

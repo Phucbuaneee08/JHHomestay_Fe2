@@ -1,25 +1,25 @@
 import React, { useState, useEffect, } from 'react';
 import { useSelector } from 'react-redux'
-import ModalCreate from "../User/CreateAdmin/ModalCreate"
+import ModalCreate from "../Discounts/CreateDiscount/ModalCreate"
 import axios from 'axios';
-import AdminTable from '../User/AdminTable';
+import DiscountTable from '../Discounts/DiscountTable';
 
 
-function User() {
+function Discount() {
     const { token } = useSelector((state) => state.authReducer);
     const [isCreate, setIsCreate] = useState(false)
-    const [admin, setAdmin] = useState([])
+    const [discount, setDiscount] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [reload, setReload] = useState()
     useEffect(() => {
         axios({
             method: 'GET',
-            url: 'http://localhost:8000/super-admins/get/admins',
+            url: 'http://localhost:8000/admins/discounts',
             headers: {
                 Authorization: "Bearer " + token
             }
         }).then((res) => {
-            setAdmin(res.data.content)
+            setDiscount(res.data.content)
             setIsLoading(false)
             setReload(false)
         }).catch((err) => {
@@ -39,7 +39,7 @@ function User() {
                     hover:border-gray-300"
                     onClick={() => setIsCreate(true)}
                 >
-                    + Thêm Admin
+                    + Thêm Discount
                 </button>
                 <ModalCreate openCreate={[isCreate, setIsCreate]} reload={[reload, setReload]} />
             </div>
@@ -52,8 +52,8 @@ function User() {
                 </div>
             ) : (
                 <div className='pb-10'>
-                    <AdminTable
-                        adminProps={[admin, setAdmin]}
+                    <DiscountTable
+                        discountProps={[discount, setDiscount]}
                         reload={[reload, setReload]}
                     />
                 </div>
@@ -63,4 +63,4 @@ function User() {
 
 }
 
-export default User;
+export default Discount;

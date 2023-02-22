@@ -11,6 +11,7 @@ const year = new Date().getFullYear();
 const years = Array.from(new Array(20), (val, index) => year - index);
 
 function Sales() {
+  const { token } = useSelector((state) => state.authReducer);
   const { role } = useSelector((state) => state.authReducer);
   const homestayListReducer = useSelector((state) => state.homestayReducer);
 
@@ -26,6 +27,9 @@ function Sales() {
       axios({
         method: "GET",
         url: "http://localhost:8000/super-admins/homestays",
+        headers: {
+          Authorization: "Bearer " + token,
+        }
       })
         .then((res) => {
           const tempHomestayList = res.data.content.map((item) => ({

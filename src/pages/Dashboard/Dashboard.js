@@ -4,15 +4,16 @@ import Sales from "../../components/Dashboard/Sales"
 import User from "../../components/Dashboard/User"
 import Sidebar from "../../components/Shared/Sidebar"
 import Header from "../../components/Shared/Header"
+import Discount from "../../components/Dashboard/Discount"
 import "../../components/Shared/Sidebar.css"
-import {Switch, Route, Redirect} from "react-router-dom"
-import { useSelector} from 'react-redux'
+import { Switch, Route, Redirect } from "react-router-dom"
+import { useSelector } from 'react-redux'
 
 function Dashboard() {
-    const { role, email} = useSelector((state) => state.authReducer)
-    return(
+    const { role, email } = useSelector((state) => state.authReducer)
+    return (
         <div className="grid grid-cols-7">
-            <Sidebar className="col-span-1"   />
+            <Sidebar className="col-span-1" />
             <div className="col-start-2 col-end-8 flex-shrink bg-white" >
                 <Header email={email} />
                 <Switch>
@@ -25,12 +26,15 @@ function Dashboard() {
                     <Route path="/dashboard/homestay-management" exact>
                         <Homestay />
                     </Route>
+                    <Route path="/dashboard/discount-management" exact>
+                        <Discount />
+                    </Route>
                     <Route path="/dashboard/user-management" exact>
                         <User />
                     </Route>
-                    <Redirect path="/dashboard/homestay-mangement"/>
+                    <Redirect path="/dashboard/homestay-mangement" />
                 </Switch>
-            </div>    
+            </div>
         </div>
     )
 

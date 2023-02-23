@@ -7,12 +7,11 @@ function InformationForm(props){
     const eDate = discount.expiredDate? new Date(discount.expiredDate) : new Date;
     const [startDate,setStartDate] = useState(sDate);
     const [expiredDate,setExpiredDate] = useState(eDate);
-     
+
     const handleInput = (e) => {
         const newDiscount = {...discount}
         newDiscount[e.target.name] = e.target.value 
         setDiscount(newDiscount)
-        
     };
     useEffect(()=>{
         const tempDiscount = {...discount, startDate, expiredDate}
@@ -94,6 +93,8 @@ function InformationForm(props){
                     onChange = {(e) => handleInput (e)}
                 />
             </label>
+
+
             <br></br><br></br><br></br><br></br>
         </div>
     )

@@ -8,8 +8,8 @@ import InformationForm from "../UpdateDiscount/InformationForm";
 
 function ModalCreate(props) {
 
-    const { token } = useSelector((state) => state.authReducer);
-    const {adminId} = useSelector((state) => state.authReducer.userId);
+    const { token, userId} = useSelector((state) => state.authReducer);
+    console.log(userId);
     const [reload, setReload] = props.reload;
     const [isOpen, setIsOpen] = props.openCreate;
     const closeModal = () => setIsOpen(false);
@@ -50,7 +50,7 @@ function ModalCreate(props) {
                 method: "POST",
                 url: "http://localhost:8000/admins/discounts/create",
                 data: {
-                    adminId: adminId,
+                    adminId: userId,
                     name: infor.name,
                     code: infor.code,
                     value: infor.value,

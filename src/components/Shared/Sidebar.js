@@ -82,20 +82,14 @@ const sidebarVar = [
   {
     path: "/dashboard/discount-management",
     title: "Discount",
-    icon: <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className="h-6 w-6"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={2}
-        d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
-      />
-    </svg>,
+    icon: <svg fill="none" viewBox="0 0 15 15" height="1em" width="1em" >
+                <path
+                  fill="currentColor"
+                  fillRule="evenodd"
+                  d="M6.448.436l-1.13 1.129a.488.488 0 01-.344.143H3.196c-.822 0-1.488.666-1.488 1.488v1.778c0 .13-.052.253-.143.345L.435 6.448a1.488 1.488 0 000 2.104l1.13 1.13a.488.488 0 01.143.344v1.778c0 .822.666 1.488 1.488 1.488h1.778c.13 0 .253.052.345.143l1.129 1.13a1.488 1.488 0 002.104 0l1.13-1.13a.488.488 0 01.344-.143h1.778c.822 0 1.488-.666 1.488-1.488v-1.778c0-.13.052-.253.143-.345l1.13-1.129a1.488 1.488 0 000-2.104l-1.13-1.13a.488.488 0 01-.143-.344V3.196c0-.822-.666-1.488-1.488-1.488h-1.778a.488.488 0 01-.345-.143L8.552.435a1.488 1.488 0 00-2.104 0zm-1.802 9.21l5-5 .708.708-5 5-.708-.708zM5 5v1h1V5H5zm4 5h1V9H9v1z"
+                  clipRule="evenodd"
+                />
+              </svg>,
     authorize: "admin",
   },
 ];

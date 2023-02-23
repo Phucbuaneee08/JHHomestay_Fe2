@@ -7,6 +7,7 @@ import DiscountTable from '../Discounts/DiscountTable';
 
 function Discount() {
     const { token, userId } = useSelector((state) => state.authReducer);
+    console.log(token, userId);
     const [isCreate, setIsCreate] = useState(false)
     const [discount, setDiscount] = useState([])
     const [isLoading, setIsLoading] = useState(true)
@@ -14,9 +15,8 @@ function Discount() {
     useEffect(() => {
         axios({
             method: 'GET',
-            url: 'http://localhost:8000/admins/discounts',
+            url: 'http://localhost:8000/admins/discounts?adminId=' + userId,
             headers: {
-                AdminId: userId,
                 Authorization: "Bearer " + token
             }
         }).then((res) => {

@@ -15,9 +15,10 @@ const typeList=[
 function InformationForm(props){
     const [homestay, setHomestay] = props.inforProps;
     const [admin, setAdmin] = useState([])
+    const [discount, setDiscount] = useState([])
     const state=props.state;
     const role = useSelector((state) => state.authReducer.role);
-
+    const adminId = useSelector((state) => state.authReducer.userId);
     const handleInput = (e) => {
         const newHomestay = {...homestay}
         newHomestay[e.target.name] = e.target.value 
@@ -29,14 +30,25 @@ function InformationForm(props){
     useEffect(() => {
         const fetchData = async() => {
         try {
+        if(role == "super-admin")
+                {
                 const {data: response} = await axios.get('http://localhost:8000/super-admins/get/admins', {
+                                                    headers:{
+                                                        Authorization: "Bearer " + token,
+                                                    }
+                                                });
+                                                setAdmin(response.content)
+                }
+else
+{
+ const {data: response} = await axios.get('http://localhost:8000/admins/discounts?adminId=' + adminId, {
                     headers:{
                         Authorization: "Bearer " + token,
                     }
                 });
-                setAdmin(response.content)
-                // console.log(response.content)
-            } 
+                setDiscount(response.content)
+}
+            }
         catch (error) {
             console.error(error.message);
             }
@@ -93,7 +105,28 @@ function InformationForm(props){
                         ):null}
                     </select>)}
                 </label>
-            ) : null}
+            ) : (
+
+                                <label htmlFor="discountId" className="flex flex-col p-2">
+                                    <div class="font-bold h-6 mt-3 text-gray-600 text-sm leading-8 uppercase">
+                                        Discount
+                                    </div>
+                                    {state==="update" ? (
+                                    <select
+                                        name = "discountId"
+                                        value={homestay.discountId}
+                                        onChange={(e) => handleInput (e)}
+                                        className="border rounded-md px-4 py-2"
+                                    >
+                                        <option className="text-gray-300"> -- null -- </option>
+                                        {discount && discount.length ? discount.map(discount=>
+                                            <option value={discount._id}> {discount.name} </option>
+
+                                        ):null}
+                                    </select>
+                                    ) : null}
+                                </label>
+                            )}
 
             <label htmlFor="province" className="flex flex-col p-2">
                 <div class="font-bold h-6 mt-3 text-gray-600 text-sm leading-8 uppercase">

@@ -7,6 +7,7 @@ import DiscountTable from '../Discounts/DiscountTable';
 
 function Discount() {
     const { token } = useSelector((state) => state.authReducer);
+    const {adminId} = useSelector((state => state.authReducer.userId))
     const [isCreate, setIsCreate] = useState(false)
     const [discount, setDiscount] = useState([])
     const [isLoading, setIsLoading] = useState(true)
@@ -16,6 +17,7 @@ function Discount() {
             method: 'GET',
             url: 'http://localhost:8000/admins/discounts',
             headers: {
+                AdminId: adminId,
                 Authorization: "Bearer " + token
             }
         }).then((res) => {

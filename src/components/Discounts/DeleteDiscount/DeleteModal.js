@@ -17,7 +17,7 @@ function DeleteDiscount(props) {
   useEffect(() => {
     if (isDeleted)
     axios
-      .delete(`http://localhost:8000/admins/discounts/${_id}`, {
+      .delete(`http://localhost:8000/admins/discounts/delete/${_id}`, {
         headers: {
             Authorization: "Bearer " + token
         }

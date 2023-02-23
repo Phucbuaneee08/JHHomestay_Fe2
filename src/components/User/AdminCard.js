@@ -37,7 +37,7 @@ function AdminCard (props){
                     className="text-indigo-600 hover:text-indigo-900"
                     onClick={() => setUpdateForm(true)}
                 >
-                Chi tiết Admin
+                Cập nhật
                 </button>
             </td>
 
@@ -46,7 +46,7 @@ function AdminCard (props){
                     className="text-red-600 hover:text-red-900"
                     onClick={()=> setDeleteForm(true)}
                 >
-                Xóa Admin
+                Xóa
                 </button>
             </td>
 

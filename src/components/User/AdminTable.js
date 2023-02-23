@@ -33,13 +33,13 @@ function AdminTable(props){
                       scope="col"
                       className="w-1/6 sticky px-6 py-3 text-left text-base font-medium text-gray-500 uppercase tracking-wider"
                     >
-                      Homestay Của Admin
+                      Homestay của Nhân viên
                     </th>
                     <th 
                       scope="col" 
                       className="w-1/6 sticky px-6 py-3 text-left text-base font-medium text-gray-500 uppercase tracking-wider"
                     >
-                      <span className=""> Thông tin admin </span>
+                      <span className=""> </span>
                     </th>
                     <th 
                       scope="col" 

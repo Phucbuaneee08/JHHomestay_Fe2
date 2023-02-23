@@ -39,7 +39,7 @@ function User() {
                     hover:border-gray-300"
                     onClick={() => setIsCreate(true)}
                 >
-                    + Thêm Admin
+                    + Thêm Nhân viên
                 </button>
                 <ModalCreate openCreate={[isCreate, setIsCreate]} reload={[reload, setReload]} />
             </div>

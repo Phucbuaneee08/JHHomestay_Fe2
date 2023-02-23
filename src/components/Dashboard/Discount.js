@@ -1,13 +1,12 @@
 import React, { useState, useEffect, } from 'react';
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import ModalCreate from "../Discounts/CreateDiscount/ModalCreate"
 import axios from 'axios';
 import DiscountTable from '../Discounts/DiscountTable';
 
 
 function Discount() {
-    const { token } = useSelector((state) => state.authReducer);
-    const {adminId} = useSelector((state => state.authReducer.userId))
+    const { token, userId } = useSelector((state) => state.authReducer);
     const [isCreate, setIsCreate] = useState(false)
     const [discount, setDiscount] = useState([])
     const [isLoading, setIsLoading] = useState(true)
@@ -17,7 +16,7 @@ function Discount() {
             method: 'GET',
             url: 'http://localhost:8000/admins/discounts',
             headers: {
-                AdminId: adminId,
+                AdminId: userId,
                 Authorization: "Bearer " + token
             }
         }).then((res) => {

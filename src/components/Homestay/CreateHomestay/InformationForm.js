@@ -2,65 +2,64 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from 'react-redux'
 
-const typeList=[
-    {name: "Căn hộ"},
-    {name: "Hotel"},
-    {name: "Biệt thực"},
-    {name: "Nhà riêng"},
-    {name: "Căn hộ Studio"},
-    {name: "Căn hộ chung cư"},
-    {name: "Căn hộ dịch vụ"},
-    {name: "Khác"}
+const typeList = [
+    { name: "Căn hộ" },
+    { name: "Hotel" },
+    { name: "Biệt thực" },
+    { name: "Nhà riêng" },
+    { name: "Căn hộ Studio" },
+    { name: "Căn hộ chung cư" },
+    { name: "Căn hộ dịch vụ" },
+    { name: "Khác" }
 ]
-function InformationForm(props){
+function InformationForm(props) {
     const [homestay, setHomestay] = props.inforProps;
     const [admin, setAdmin] = useState([])
     const [discount, setDiscount] = useState([])
-    const state=props.state;
+    const state = props.state;
     const role = useSelector((state) => state.authReducer.role);
     const adminId = useSelector((state) => state.authReducer.userId);
     const handleInput = (e) => {
-        const newHomestay = {...homestay}
-        newHomestay[e.target.name] = e.target.value 
+        const newHomestay = { ...homestay }
+        newHomestay[e.target.name] = e.target.value
         setHomestay(newHomestay)
         console.log(newHomestay)
     };
     const { token } = useSelector((state) => state.authReducer);
 
     useEffect(() => {
-        const fetchData = async() => {
-        try {
-        if(role == "super-admin")
-                {
-                const {data: response} = await axios.get('http://localhost:8000/super-admins/get/admins', {
-                                                    headers:{
-                                                        Authorization: "Bearer " + token,
-                                                    }
-                                                });
-                                                setAdmin(response.content)
+        const fetchData = async () => {
+            try {
+                console.log(role);
+                if (role == "super_admin") {
+                    const { data: response } = await axios.get('http://localhost:8000/super-admins/get/admins', {
+                        headers: {
+                            Authorization: "Bearer " + token,
+                        }
+                    });
+                    setAdmin(response.content)
                 }
-else
-{
- const {data: response} = await axios.get('http://localhost:8000/admins/discounts?adminId=' + adminId, {
-                    headers:{
-                        Authorization: "Bearer " + token,
-                    }
-                });
-                setDiscount(response.content)
-}
+                else {
+                    const { data: response } = await axios.get('http://localhost:8000/admins/discounts?adminId=' + adminId, {
+                        headers: {
+                            Authorization: "Bearer " + token,
+                        }
+                    });
+                    setDiscount(response.content)
+                }
             }
-        catch (error) {
-            console.error(error.message);
+            catch (error) {
+                console.error(error.message);
             }
         }
         fetchData()
-      }, [])
+    }, [])
 
-      return (
+    return (
         <div>
             <label htmlFor="name" className="flex flex-col p-2">
                 <div class="font-bold h-6 text-gray-600 text-sm leading-8 uppercase">
-                    <span class="text-red-400 mr-1">*</span> 
+                    <span class="text-red-400 mr-1">*</span>
                     Tên homestay
                 </div>
                 <input
@@ -70,63 +69,63 @@ else
                     type="text"
                     name="name"
                     value={homestay.name}
-                    onChange = {(e) => handleInput (e)}
+                    onChange={(e) => handleInput(e)}
                 />
             </label>
-            
+
             {role === "super_admin" ? (
                 <label htmlFor="adminId" className="flex flex-col p-2">
                     <div class="font-bold h-6 mt-3 text-gray-600 text-sm leading-8 uppercase">
                         Admin
                     </div>
-                    {state==="create" ? (
-                    <select 
-                        name = "adminId"
-                        value={homestay.adminId} 
-                        onChange={(e) => handleInput (e)}
-                        className="border rounded-md px-4 py-2"
-                    >
-                        <option className="text-gray-300"> -- null -- </option>
-                        {admin && admin.length ? admin.map(admin=>
-                            <option value={admin._id}> {admin.name} </option> 
-                            
-                        ):null}
-                    </select>
+                    {state === "create" ? (
+                        <select
+                            name="adminId"
+                            value={homestay.adminId}
+                            onChange={(e) => handleInput(e)}
+                            className="border rounded-md px-4 py-2"
+                        >
+                            <option className="text-gray-300"> -- null -- </option>
+                            {admin && admin.length ? admin.map(admin =>
+                                <option value={admin._id}> {admin.name} </option>
+
+                            ) : null}
+                        </select>
                     ) : (
-                    <select 
-                        name = "admin"
-                        value={homestay.admin} 
-                        onChange={(e) => handleInput (e)}
-                        className="border rounded-md px-4 py-2"
-                    >
-                        <option className="text-gray-300"> -- null -- </option>
-                        {admin && admin.length ? admin.map(admin=>
-                            <option value={admin._id}> {admin.name} </option> 
-                        ):null}
-                    </select>)}
+                        <select
+                            name="admin"
+                            value={homestay.admin}
+                            onChange={(e) => handleInput(e)}
+                            className="border rounded-md px-4 py-2"
+                        >
+                            <option className="text-gray-300"> -- null -- </option>
+                            {admin && admin.length ? admin.map(admin =>
+                                <option value={admin._id}> {admin.name} </option>
+                            ) : null}
+                        </select>)}
                 </label>
             ) : (
 
-                                <label htmlFor="discountId" className="flex flex-col p-2">
-                                    <div class="font-bold h-6 mt-3 text-gray-600 text-sm leading-8 uppercase">
-                                        Discount
-                                    </div>
-                                    {state==="update" ? (
-                                    <select
-                                        name = "discountId"
-                                        value={homestay.discountId}
-                                        onChange={(e) => handleInput (e)}
-                                        className="border rounded-md px-4 py-2"
-                                    >
-                                        <option className="text-gray-300"> -- null -- </option>
-                                        {discount && discount.length ? discount.map(discount=>
-                                            <option value={discount._id}> {discount.name} </option>
+                <label htmlFor="discountId" className="flex flex-col p-2">
+                    <div class="font-bold h-6 mt-3 text-gray-600 text-sm leading-8 uppercase">
+                        Discount
+                    </div>
+                    {state === "update" ? (
+                        <select
+                            name="discountId"
+                            value={homestay.discountId}
+                            onChange={(e) => handleInput(e)}
+                            className="border rounded-md px-4 py-2"
+                        >
+                            <option className="text-gray-300"> -- null -- </option>
+                            {discount && discount.length ? discount.map(discount =>
+                                <option value={discount._id}> {discount.name} </option>
 
-                                        ):null}
-                                    </select>
-                                    ) : null}
-                                </label>
-                            )}
+                            ) : null}
+                        </select>
+                    ) : null}
+                </label>
+            )}
 
             <label htmlFor="province" className="flex flex-col p-2">
                 <div class="font-bold h-6 mt-3 text-gray-600 text-sm leading-8 uppercase">
@@ -139,16 +138,16 @@ else
                     name="province"
                     list="provinceList"
                     value={homestay.province}
-                    onChange = {(e) => handleInput (e)}
+                    onChange={(e) => handleInput(e)}
                 />
                 <datalist id="provinceList">
-                    <option value="Hà Nội"/>
-                    <option value="Đà Nẵng"/>
-                    <option value="Khánh Hòa"/>
-                    <option value="Lâm Đồng"/>
-                    <option value="Nha Trang"/>
-                    <option value="Quảng Nam"/>
-                    <option value="Bà Rịa Vũng Tàu"/>
+                    <option value="Hà Nội" />
+                    <option value="Đà Nẵng" />
+                    <option value="Khánh Hòa" />
+                    <option value="Lâm Đồng" />
+                    <option value="Nha Trang" />
+                    <option value="Quảng Nam" />
+                    <option value="Bà Rịa Vũng Tàu" />
                 </datalist>
             </label>
 
@@ -162,7 +161,7 @@ else
                     type="text"
                     name="district"
                     value={homestay.district}
-                    onChange = {(e) => handleInput (e)}
+                    onChange={(e) => handleInput(e)}
                 />
             </label>
 
@@ -176,7 +175,7 @@ else
                     type="text"
                     name="address"
                     value={homestay.address}
-                    onChange = {(e) => handleInput (e)}
+                    onChange={(e) => handleInput(e)}
                 />
             </label>
 
@@ -184,23 +183,23 @@ else
                 <div class="font-bold h-6 mt-3 text-gray-600 text-sm leading-8 uppercase">
                     Loại homestay
                 </div>
-                <select 
-                    name = "type"
-                    value={homestay.type} 
-                    onChange={(e) => handleInput (e)}
+                <select
+                    name="type"
+                    value={homestay.type}
+                    onChange={(e) => handleInput(e)}
                     className="border rounded-md px-4 py-2"
                 >
                     <option className="text-gray-300"> -- null -- </option>
-                    {typeList.map(t=>
-                        <option value={t.name}> {t.name} </option> 
+                    {typeList.map(t =>
+                        <option value={t.name}> {t.name} </option>
                     )}
                 </select>
             </label>
-            
+
             <label htmlFor="area" className="flex flex-col p-2">
                 <div class="font-bold h-6 mt-3 text-gray-600 text-sm leading-8 uppercase">
                     Diện tích (m2)
-                </div>                
+                </div>
                 <input
                     className="border px-4 py-2 rounded-md focus:outline-none"
                     id="area"
@@ -208,14 +207,14 @@ else
                     name="area"
                     pattern="[0-9]*"
                     value={homestay.area}
-                    onChange = {(e) => handleInput (e)}
+                    onChange={(e) => handleInput(e)}
                 />
             </label>
 
             <label htmlFor="price" className="flex flex-col p-2">
                 <div class="font-bold h-6 mt-3 text-gray-600 text-sm leading-8 uppercase">
                     Giá tiền (VND)
-                </div>                
+                </div>
                 <input
                     className="border px-4 py-2 rounded-md focus:outline-none"
                     id="price"
@@ -223,7 +222,7 @@ else
                     name="price"
                     pattern="[0-9]*"
                     value={homestay.price}
-                    onChange = {(e) => handleInput (e)}
+                    onChange={(e) => handleInput(e)}
                 />
             </label>
 
@@ -231,12 +230,12 @@ else
                 <div class="font-bold h-6 mt-3 text-gray-600 text-sm leading-8 uppercase">
                     Mô tả
                 </div>
-                <textarea 
+                <textarea
                     className="border px-4 py-2 rounded-md focus:outline-none"
                     id="description"
                     name="description"
                     value={homestay.description}
-                    onChange = {(e) => handleInput (e)}
+                    onChange={(e) => handleInput(e)}
                 />
             </label>
 
